@@ -6,8 +6,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* html{
+  margin: 0;
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* @import url("./components/slider/Slider.css"); */
+
+
+@import url("./components/UI/Card/style.css");
+@import url("./containers/OrderContainer/index.css");
+@import url("./containers/History/index.css");
+@import url("./containers/Bill/index.css");
