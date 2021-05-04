@@ -1,0 +1,17 @@
+.select__option{
+    display: flex;
+}
+.select__option h5{
+    font-weight: bold;
+    margin-right: 10px;
+}
+.select__option select{
+    width: 100px;
+    min-width: 130px;
+    height: 20px;
+    border: 1px black solid;
+    margin-top: 8px;
+}
+.select__option .select__cate{
+    margin-left: 20px;
+}

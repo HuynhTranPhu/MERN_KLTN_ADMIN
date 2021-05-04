@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 class Product extends Component {
   constructor() {
     super();
@@ -19,7 +20,6 @@ class Product extends Component {
       description: "",
       id_brand: "",
       id_category: "",
-      noti: "",
       id: null
     };
   }
@@ -126,74 +126,32 @@ class Product extends Component {
       file
     } = this.state;
     if (name.length <= 0) {
-      this.setState({
-        noti: "Name invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
+        toast.error("Name invalid");
+        return; 
+    } 
     if (color.length <= 0) {
-      this.setState({
-        noti: "Color invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
+      toast.error("Color invalid"); 
+      return; 
     }
     if (quantity <= 0) {
-      this.setState({
-        noti: "Quantity invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
+      toast.error("Quantity invalid");
+      return; 
+    } 
     if (!this.invalidPrice(price)) {
-      this.setState({
-        noti: "Price invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
+      toast.error("Price invalid");
+      return; 
     }
     if (id_category === "") {
-      this.setState({
-        noti: "Category invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
+      toast.error("Category invalid");
+      return; 
+    } 
     if (id_brand === "") {
-      this.setState({
-        noti: "Brand invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
+      toast.error("Brand invalid");
+      return; 
+    } 
     if (file === null) {
-      this.setState({
-        noti: "File invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
+      toast.error("File invalid");
+      return; 
     }
     this.props.addProduct(
       id_category,
@@ -221,74 +179,32 @@ class Product extends Component {
       status
     } = this.state;
     if (name.length <= 0) {
-      this.setState({
-        noti: "Name invalid"
-      });
+      toast.error("Name invalid");
       return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
+    } 
     if (color.length <= 0) {
-      this.setState({
-        noti: "Color invalid"
-      });
+      toast.error("Color invalid"); 
       return;
-    } else {
-      this.setState({
-        noti: ""
-      });
     }
     if (quantity <= 0) {
-      this.setState({
-        noti: "Quantity invalid"
-      });
+      toast.error("Quantity invalid");
       return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
+    } 
     if (!this.invalidPrice(price)) {
-      this.setState({
-        noti: "Price invalid"
-      });
+      toast.error("Price invalid");
       return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
+    } 
     if (id_category === "") {
-      this.setState({
-        noti: "Category invalid"
-      });
+      toast.error("Category invalid");
       return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
+    } 
     if (id_brand === "") {
-      this.setState({
-        noti: "Brand invalid"
-      });
+      toast.error("Brand invalid");
       return;
-    } else {
-      this.setState({
-        noti: ""
-      });
     }
     if (file === null && img === '' ) {
-      this.setState({
-        noti: "File invalid"
-      });
+      toast.error("File invalid");
       return;
-    } else {
-      this.setState({
-        noti: ""
-      });
     }
     this.props.updateProduct(
       id,
@@ -344,7 +260,6 @@ class Product extends Component {
   };
   reset = () => {
     this.setState({
-        noti: "",
         //name: "",
         file: null,
         imagePreviewUrl: null,
@@ -359,7 +274,6 @@ class Product extends Component {
         description: "",
         id_brand: "",
         id_category: "",
-        //noti: "",
         id: null
     })
   }
@@ -722,11 +636,6 @@ class Product extends Component {
                             />False
                           </label>
                         </form>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="col-lg-offset-2 col-lg-10">
-                        <p>{this.state.noti}</p>
                       </div>
                     </div>
                     {this.renderBtnSubmit()}

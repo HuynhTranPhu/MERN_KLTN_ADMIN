@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { productTypes, PRODUCT_LIST_SUCCESS } from '../constants/action.types'
+import { productTypes, PRODUCT_LIST_SUCCESS, UPDATE_PRICE_BY_CATEGORY_FAIL, UPDATE_PRICE_BY_CATEGORY_REQUEST, UPDATE_PRICE_BY_CATEGORY_SUCCESS } from '../constants/action.types'
 
 
 
@@ -350,3 +350,21 @@ export const orderSetTotalPage = (totalpage) => ({
     type: productTypes.ORDER_SET_TOTAL_PAGE,
     totalpage
 })
+
+export const updatePriceByCategory = (categoryName,disCount, increase) => async (dispatch)=> {
+   
+    try {
+      dispatch({ type: UPDATE_PRICE_BY_CATEGORY_REQUEST });
+      const {data} = await axios.post(`${url}/admin/product/updateprice`,{categoryName,disCount, increase});
+        dispatch({
+          type: UPDATE_PRICE_BY_CATEGORY_SUCCESS,
+          payload: data
+        });
+       
+    } catch (error) {
+      dispatch({
+        type: UPDATE_PRICE_BY_CATEGORY_FAIL,
+        payload: error.message
+      });
+    }
+};

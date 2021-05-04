@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import { getCustomerOrders, viewHistoryGet } from '../../actions/order.action';
 import Slider from '../../containers/slider.container';
 import NavbarContainer from '../../containers/navbar.container';
-import LoadingBox from '../../components/Config/LoadingBox';
-import MessageBox from '../../components/Config/MessageBox';
 
 const History = (props) => {
     const order = useSelector((state) => state.order);
@@ -14,7 +12,7 @@ const History = (props) => {
    
     useEffect(() => {
         dispatch(getCustomerOrders());
-}, [dispatch])
+    }, [dispatch])
     return (
         <section id="container" className="">
         <NavbarContainer /> 

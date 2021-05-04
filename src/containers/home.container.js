@@ -9,7 +9,7 @@ import * as userActions from "../actions/user.action";
 
 class HomeContainer extends Component {
   async componentWillMount() { 
-    this.props.homeActions.getTopProduct();
+    //this.props.homeActions.getTopProduct();
     let res = await this.props.userActions.auth()
         if (res === false)
             this.props.history.push('/login')
@@ -33,7 +33,7 @@ class HomeContainer extends Component {
   }
 }
 const mapStateToProps = state => ({
-  top_product: state.homeReducers.home.top_product,
+  // top_product: state.homeReducers.home.top_product,
   islogin: state.userReducers.user.islogin
 });
 

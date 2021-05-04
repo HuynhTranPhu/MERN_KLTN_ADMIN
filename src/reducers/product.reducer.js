@@ -1,4 +1,4 @@
-import { productTypes, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS } from '../constants/action.types'
+import { productTypes, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, UPDATE_PRICE_BY_CATEGORY_FAIL, UPDATE_PRICE_BY_CATEGORY_REQUEST, UPDATE_PRICE_BY_CATEGORY_SUCCESS } from '../constants/action.types'
 import { combineReducers } from 'redux'
 const category = (state = { data: [], page: 1, totalpage: null }, action) => {
     switch (action.type) {
@@ -197,10 +197,23 @@ function stockReducer(state={stock:[]}, action){
             return {loading : false, stock : action.payload};
         default : return state;
     }
-  }
+}
+function updatePriceByCategoryReducer(state={},action){
+    switch(action.type){
+        case UPDATE_PRICE_BY_CATEGORY_REQUEST:
+            return {loading: true};
+        case  UPDATE_PRICE_BY_CATEGORY_SUCCESS:
+            return { loading : false };
+    
+        case UPDATE_PRICE_BY_CATEGORY_FAIL:
+            return { loading : false, error: action.payload}
+        default:
+            return state;
+    }
+}
 export default combineReducers({
     category,
     product, 
     brand
 })
-export {stockReducer}
+export {stockReducer,updatePriceByCategoryReducer}

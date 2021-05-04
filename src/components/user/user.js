@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 class User extends Component {
   constructor() {
     super();
     this.state = {
       name: null,
       id: null,
-      noti: null,
       email: "",
       password: "",
       phone: "",
@@ -31,16 +31,12 @@ class User extends Component {
       this.setState({ pagination: tmp });
     }
     if (nextProps.isadd === false) {
-      this.setState({
-        noti: "Email already exist "
-      });
+      toast.error("Email is already exits")
     } else if (nextProps.isadd === true) {
       this.reset();
     }
     if (nextProps.isupdate === false) {
-      this.setState({
-        noti: "Update fail"
-      });
+      toast.error("Update fail")
     } else if (nextProps.isupdate === true) {
       this.reset();
     }
@@ -104,35 +100,17 @@ class User extends Component {
       is_admin
     } = this.state;
     if (!this.isvalidEmail(email)) {
-      this.setState({
-        noti: "Email invalid"
-      });
+      toast.error("Email invalid")
       return;
-    } else {
-      this.setState({
-        noti: ""
-      });
     }
     if (password.length < 6) {
-      this.setState({
-        noti: "Password invalid"
-      });
+      toast.error("Password invalid")
       return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
+    } 
     if (name.length < 3) {
-      this.setState({
-        noti: "First name invalid"
-      });
+      toast.error("Name invalid")
       return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
+    } 
     this.props.addUser(
       email,
       password,
@@ -148,15 +126,9 @@ class User extends Component {
       status
     } = this.state;
     if (!this.isvalidEmail(email)) {
-      this.setState({
-        noti: "Email invalid"
-      });
+      toast.error("Email invalid")
       return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
+    } 
     // if (password.length < 6) {
     //   this.setState({
     //     noti: "Password invalid"
@@ -168,14 +140,8 @@ class User extends Component {
     //   });
     // }
     if (name.length < 3) {
-      this.setState({
-        noti: "First name invalid"
-      });
+      toast.error("Name invalid")
       return;
-    } else {
-      this.setState({
-        noti: ""
-      });
     }
     this.props.updateUser(
       email,
@@ -193,7 +159,11 @@ class User extends Component {
       return (
         <div className="form-group">
           <div className="col-lg-offset-2 col-lg-10">
-            <button onClick={() => this.addUser()} className="btn-custom">
+            <button onClick={() =>{
+              this.addUser()
+              toast.success("Add success")
+
+            } } className="btn-custom">
               Add
             </button>
             <button disabled className="btn-custom">
@@ -216,7 +186,10 @@ class User extends Component {
             >
               Add
             </button>
-            <button onClick={() => this.updateUser()} className="btn-custom">
+            <button onClick={() =>{
+              this.updateUser()
+              toast.success("Update success")
+            } } className="btn-custom">
               Update
             </button>
             <button onClick={() => this.reset()} className="btn-custom">
@@ -231,7 +204,6 @@ class User extends Component {
     this.setState({
       //name: null,
       id: null,
-      noti: null,
       email: "",
       password: "",
       name: "",
@@ -478,11 +450,6 @@ class User extends Component {
                         </form>
                       </div>
                     </div> */}
-                    <div className="form-group">
-                      <div className="col-lg-offset-2 col-lg-10">
-                        <p>{this.state.noti}</p>
-                      </div>
-                    </div>
                     {this.renderBtn()}
                   </div>
                 </div>

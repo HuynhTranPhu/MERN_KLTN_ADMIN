@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 class Brand extends Component {
   constructor() {
     super();
@@ -8,7 +9,6 @@ class Brand extends Component {
       currname: null,
       name: null,
       id: null,
-      noti: null,
       currType: 'add'
     };
   }
@@ -28,23 +28,17 @@ class Brand extends Component {
       this.setState({ pagination: tmp });
     }
     if (nextProps.isadd === false) {
-      this.setState({
-        noti: "Please Change name"
-      });
+      toast.error("Please change name")
     } else if (nextProps.isadd === true) {
       this.setState({
-        noti: "add brand success",
         name: "",
         currType: 'add'
       });
     }
     if (nextProps.isupdate === false) {
-      this.setState({
-        noti: "update fail"
-      });
+     toast.error("Update fail")
     } else if (nextProps.isupdate === true) {
       this.setState({
-        noti: "",
         id: null,
         name: "",
         currType: 'add'
@@ -91,7 +85,10 @@ class Brand extends Component {
         <div className="form-group">
           <div className="col-lg-offset-2 col-lg-10">
             <button
-              onClick={() => this.props.addBrand(this.state.name, this.state.status)}
+              onClick={() => {
+                this.props.addBrand(this.state.name, this.state.status)
+                toast.success("Add success")
+              }}
               className="btn-custom"
             >
               Add
@@ -127,7 +124,10 @@ class Brand extends Component {
             </button>
             <button
               onClick={() =>
-                this.props.updateBrand(this.state.id, this.state.name, this.state.status)
+                {
+                  this.props.updateBrand(this.state.id, this.state.name, this.state.status)
+                  toast.success("Update success")
+                }
               }
               className="btn-custom"
             >
@@ -146,7 +146,6 @@ class Brand extends Component {
   };
   reset = () => {
       this.setState({
-        noti: "",
         id: null,
         name: "",
         currType: 'add'
@@ -274,11 +273,6 @@ class Brand extends Component {
                             />False
                           </label>
                         </form>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="col-lg-offset-2 col-lg-10">
-                        <p>{this.state.noti}</p>
                       </div>
                     </div>
                     {this.renderBtn()}

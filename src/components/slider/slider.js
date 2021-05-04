@@ -42,6 +42,12 @@ class Slider extends Component {
                                 <span>Order</span>
                             </Link>
                         </li>
+                        <li className="active">
+                            <Link className="" to="/promotion">
+                                <i className="fas fa-chart-line"></i>
+                                <span>Promotion</span>
+                            </Link>
+                        </li>
                         {/* <li className="sub-menu">
                             <a href="javascript:" className=""> 
                                 <i className="icon_document_alt"></i>

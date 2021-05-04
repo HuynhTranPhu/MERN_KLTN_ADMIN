@@ -8,7 +8,11 @@ import { createLogger } from 'redux-logger'
 import App from './containers/App'
 import thunk from 'redux-thunk'
 import reducers from './reducers'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const middleware = [ thunk ];
+
     
 if (process.env.NODE_ENV !== 'production') {
   middleware.push(createLogger());
@@ -30,5 +34,6 @@ const store = createStore(reducers, {}, enhancer);
 render(
     <Provider store={store}>
         <App/>
+        <ToastContainer autoClose={1500} />
     </Provider>, document.getElementById('root')
 )

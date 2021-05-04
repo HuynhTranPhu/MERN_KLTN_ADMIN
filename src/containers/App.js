@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Prompt } from "react-router-dom";
 import HomeContainer from "./home.container";
 import ProductContainer from "./product.container";
 import CategoryContainer from "./category.container";
@@ -10,6 +10,7 @@ import StatisticalContainer from './statistical.container'
 import Orders from './OrderContainer/order.container'
 import History from "./History";
 import Bill from "./Bill";
+import Promotion from "./Promotion";
 class App extends Component {
   render() {
     return (
@@ -25,6 +26,7 @@ class App extends Component {
           <Route exact path="/ordermanager/:id" component={Orders} />
           <Route exact path="/order" component={History} />
           <Route exact path="/bill/:id" component={Bill} />
+          <Route exact path="/promotion" component={Promotion} />
           {/* <Route exact path="*" component={NotFound} /> */}
           {/* <Route exact path="/view-orderDetail" component={viewOrderContainer} /> */}
         </Switch>

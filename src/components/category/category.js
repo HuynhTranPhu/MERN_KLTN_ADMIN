@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 class Category extends Component {
   constructor() {
     super();
@@ -8,7 +9,6 @@ class Category extends Component {
       currname: null,
       name: null,
       id: null,
-      noti: null,
       currType: "add"
     };
   }
@@ -28,23 +28,17 @@ class Category extends Component {
       this.setState({ pagination: tmp });
     }
     if (nextProps.isadd === false) {
-      this.setState({
-        noti: "Please Change name"
-      });
+      toast.error("Please change name")
     } else if (nextProps.isadd === true) {
       this.setState({
-        noti: "add success",
         name: "",
         currType: "add"
       });
     }
     if (nextProps.isupdate === false) {
-      this.setState({
-        noti: "update fail"
-      });
+      toast.error("Update fail")
     } else if (nextProps.isupdate === true) {
       this.setState({
-        noti: "",
         id: null,
         name: "",
         currType: "add"
@@ -53,6 +47,7 @@ class Category extends Component {
   }
   add = () => {
     this.props.addCategory(this.state.name, this.state.status);
+    toast.success('Add success')
   };
   renderPagination() {
     if (this.state.pagination.length === 0) {
@@ -126,9 +121,10 @@ class Category extends Component {
               Add
             </button>
             <button
-              onClick={() =>
+              onClick={() =>{
                 this.props.updateCategory(this.state.id, this.state.name,this.state.status)
-              }
+                toast.success('Update success')
+              }}
               className="btn-custom"
             >
               Update
@@ -146,7 +142,6 @@ class Category extends Component {
   };
   reset = () => {
       this.setState({
-        noti: "",
         id: null,
         name: "",
         currType: "add"
@@ -275,11 +270,6 @@ class Category extends Component {
                             />False
                           </label>
                         </form>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="col-lg-offset-2 col-lg-10">
-                        <p>{this.state.noti}</p>
                       </div>
                     </div>
                     {this.renderBtn()}

@@ -1,0 +1,57 @@
+.promotion{
+    position: relative;
+}
+.promotion .promotion__category{
+    display: flex;
+    position: absolute;
+    top:100px;
+    left: 250px;
+}
+.promotion .promotion__category select{
+    border: 1px black solid;
+}
+.promotion .promotion__category .promotion__category-text{
+    padding-right: 20px;
+    font-weight: bold;
+}
+.promotion .promotion__input{
+    display: flex;
+    position: absolute;
+    top:100px;
+    left: 550px;
+}
+.promotion .promotion__input input{
+    border: 1px black solid;
+}
+.promotion .promotion__input .promotion__input-text{
+    padding-right: 20px;
+    font-weight: bold;
+}
+.promotion .promotion__increase{
+    position: absolute;
+    top:100px;
+    left: 1000px;
+  
+}
+.promotion .promotion__increase button{
+    height: 35.2px;
+    border-radius: 15px;
+    min-width: 30px;
+    border: 1px black solid;
+}
+.promotion .promotion__increase button:hover, .promotion .promotion__decrease button:hover{
+    color: #fff;
+    background-color: #394a59;
+}
+.promotion .promotion__decrease {
+    position: absolute;
+    top:100px;
+    left: 1150px;
+
+}
+.promotion .promotion__decrease button{
+    height: 35.2px;
+    min-width: 30px;
+    border-radius: 15px;
+    border: 1px black solid;
+}
