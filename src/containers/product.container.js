@@ -8,9 +8,13 @@ import Slider from "./slider.container";
 import * as userActions from "../actions/user.action";
 class ProductContainer extends Component {
   async componentWillMount() {
-    this.props.productActions.getCategory();
+    this.props.productActions.getAllCategory();
+    //this.props.productActions.getCategory();
     this.props.productActions.getProduct();
-    this.props.productActions.getBrand();
+    this.props.productActions.getAllColor();
+    this.props.productActions.getAllSize();
+    //this.props.productActions.getBrand();
+    this.props.productActions.getAllBrand();
     let res = await this.props.userActions.auth();
     if (res === false) this.props.history.push("/login");
   }
@@ -31,6 +35,8 @@ class ProductContainer extends Component {
         <NavbarContainer />
         <Slider />
         <Product
+          color={this.props.color}
+          size={this.props.size}
           product={this.props.product}
           totalpage={this.props.totalpage}
           page={this.props.page}
@@ -46,52 +52,50 @@ class ProductContainer extends Component {
             id_category,
             name,
             color,
+            size,
             quantity,
             price,
-            release_date,
-            describe,
-            id_nsx,
+            description,
             id_brand,
-            file
+            files
           ) =>
             this.props.productActions.addProduct(
               id_category,
               name,
               color,
+              size,
               quantity,
               price,
-              release_date,
-              describe,
-              id_nsx,
+              description,
               id_brand,
-              file
+              files
             )
           }
           updateProduct={(
             id,
             name,
             color,
+            size,
             quantity,
             id_category,
             price,
-            release_date,
-            describe,
-            id_nsx,
+            description,
             id_brand,
-            file
+            files,
+            status
           ) =>
             this.props.productActions.updateProduct(
               id,
               name,
               color,
+              size,
               quantity,
               id_category,
               price,
-              release_date,
-              describe,
-              id_nsx,
+              description,
               id_brand,
-              file
+              files,
+              status
             )
           }
         />
@@ -101,10 +105,14 @@ class ProductContainer extends Component {
 }
 const mapStateToProps = state => ({
   product: state.productReducers.product.data,
+  color: state.productReducers.product.color,
+  size: state.productReducers.product.size,
   totalpage: state.productReducers.product.totalpage,
   page: state.productReducers.product.page,
-  category: state.productReducers.category.data,
-  brand: state.productReducers.brand.data,
+  category: state.productReducers.category.categorys,
+  //category: state.productReducers.category.data,
+  //brand: state.productReducers.brand.data,
+  brand: state.productReducers.brand.brands,
   isadd: state.productReducers.product.isadd,
   isupdate: state.productReducers.product.isupdate,
   islogin: state.userReducers.user.islogin

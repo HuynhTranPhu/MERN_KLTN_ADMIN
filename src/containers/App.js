@@ -11,6 +11,8 @@ import Orders from './OrderContainer/order.container'
 import History from "./History";
 import Bill from "./Bill";
 import Promotion from "./Promotion";
+import colorContainer from "./color.container";
+import sizeContainer from "./size.container";
 class App extends Component {
   render() {
     return (
@@ -20,6 +22,8 @@ class App extends Component {
           <Route exact path="/productmanager" component={ProductContainer} />
           <Route exact path="/categorymanager" component={CategoryContainer} />
           <Route exact path="/brandmanager" component={BrandContainer} />
+          <Route exact path="/colormanager" component={colorContainer} />
+          <Route exact path="/sizemanager" component={sizeContainer} />
           <Route exact path="/usermanager" component={UserContainer} />
           <Route exact path="/login" component={LoginContainer} />
           <Route exact path="/statistical" component={StatisticalContainer} />

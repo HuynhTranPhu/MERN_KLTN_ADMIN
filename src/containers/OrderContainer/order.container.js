@@ -51,7 +51,6 @@ const Orders = (props) => {
     <section id="container" className="">
     <NavbarContainer /> 
     <Slider />
-    
     {viewHistory.map((orderItem, index) => (
         <Card 
           key={index}

@@ -8,7 +8,7 @@ class Slider extends Component {
                     <ul className="sidebar-menu">
                         <li className="active">
                             <Link className="" to="/">
-                                <i className="icon_house_alt"></i>
+                                <i className="icon_house_alt "></i>
                                 <span>Dashboard</span>
                             </Link>
                         </li>
@@ -26,8 +26,20 @@ class Slider extends Component {
                         </li>
                         <li className="active">
                             <Link className="" to="/brandmanager">
-                            <i className="fas fa-band-aid "></i>
+                            <i className="fas fa-cube "></i>
                                 <span>Brand</span>
+                            </Link>
+                        </li>
+                        <li className="active">
+                            <Link className="" to="/colormanager">
+                            <i className="fas fa-paint-brush "></i>
+                                <span>Color</span>
+                            </Link>
+                        </li>
+                        <li className="active">
+                            <Link className="" to="/sizemanager">
+                            <i className="fas fa-list-alt "></i>
+                                <span>Size</span>
                             </Link>
                         </li>
                         <li className="active">

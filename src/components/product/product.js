@@ -1,19 +1,22 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
+let tmpColor=[];
+let tmpSize=[];
 class Product extends Component {
   constructor() {
     super();
     this.state = {
       pagination: [],
       product: null,
-      file: null,
+      files: null,
       imagePreviewUrl: null,
       curr: "add",
       category: "category",
       brand: "brand",
       name: "",
-      color:"",
+      color:null,
+      size:null,
       quantity:"",
       price: "",
       img: "",
@@ -22,6 +25,7 @@ class Product extends Component {
       id_category: "",
       id: null
     };
+
   }
   componentWillMount() {
     let tmp = [];
@@ -55,32 +59,35 @@ class Product extends Component {
       return null;
     } else {
       return (
-        <ul className="pagination pagination-custom col-md-6 offset-md-3">
-          <li onClick={() => this.props.backPage()}>
-            <a>&laquo;</a>
-          </li>
-          {this.state.pagination.map((element, index) => {
-            if (this.props.page === element) {
-              return (
-                <li
-                  className="active"
-                  onClick={() => this.props.setPage(element)}
-                >
-                  <a>{element}</a>
-                </li>
-              );
-            } else {
-              return (
-                <li onClick={() => this.props.setPage(element)}>
-                  <a>{element}</a>
-                </li>
-              );
-            }
-          })}
-          <li onClick={() => this.props.nextPage()}>
-            <a>&raquo;</a>
-          </li>
-        </ul>
+        <nav aria-label="Page navigation">
+            <ul className="pagination pagination-custom col-md-6 offset-md-3">
+            <li className="page-item page-link" onClick={() => this.props.backPage()}>
+              <a>Previous</a>
+            </li>
+            {this.state.pagination.map((element, index) => {
+              if (this.props.page === element) {
+                return (
+                  <li
+                    className="page-item page-link"
+                    onClick={() => this.props.setPage(element)}
+                  >
+                    <a>{element}</a>
+                  </li>
+                );
+              } else {
+                return (
+                  <li className="page-item page-link" onClick={() => this.props.setPage(element)}>
+                    <a>{element}</a>
+                  </li>
+                );
+              }
+            })}
+            <li className="page-item page-link" onClick={() => this.props.nextPage()}>
+              <a>Next</a>
+            </li>
+          </ul>
+        </nav>
+        
       );
     }
   }
@@ -90,12 +97,54 @@ class Product extends Component {
     let reader = new FileReader();
     reader.onloadend = () => {
       this.setState({
-        file: img,
+        files: img,
         img: reader.result
       });
     };
     reader.readAsDataURL(img);
   };
+  
+ 
+  handleAddSize = (e) => {
+
+    let a = {_id: e.target.value}
+    if(e.target.checked){
+      tmpSize.push(a);
+      
+    }else{
+      var index = tmpSize.map(function(e) { return e._id; }).indexOf(e.target.value);
+      if (index> -1) {
+        tmpSize.splice(index, 1);
+      }
+      console.log(index)
+     
+    } 
+    this.setState({
+      size: tmpSize
+    })
+    console.log(this.state.size)
+
+  };
+  
+  handleAddColor = (e) =>{
+    let a = {_id:e.target.value}
+    if(e.target.checked){
+      tmpColor.push(a);
+      
+    }else{
+      var index = tmpColor.map(function(e) { return e._id; }).indexOf(e.target.value);
+      if (index> -1) {
+        tmpColor.splice(index, 1);
+      }
+      console.log(index)
+     
+    } 
+    this.setState({
+      color: tmpColor
+    })
+    console.log(this.state.color)
+   
+  }
   invalidPrice = t => {
     var str = t.toString();
     let count = 0;
@@ -119,18 +168,24 @@ class Product extends Component {
       id_category,
       name,
       color,
+      size,
       quantity,
       price,
       description,
       id_brand,
-      file
+      files
     } = this.state;
+
     if (name.length <= 0) {
         toast.error("Name invalid");
         return; 
     } 
-    if (color.length <= 0) {
+    if (color=='') {
       toast.error("Color invalid"); 
+      return; 
+    }
+    if (size== '') {
+      toast.error("Size invalid"); 
       return; 
     }
     if (quantity <= 0) {
@@ -149,7 +204,7 @@ class Product extends Component {
       toast.error("Brand invalid");
       return; 
     } 
-    if (file === null) {
+    if (files === null) {
       toast.error("File invalid");
       return; 
     }
@@ -157,11 +212,12 @@ class Product extends Component {
       id_category,
       name,
       color,
+      size,
       quantity,
       price,
       description,
       id_brand,
-      file
+      files
     );
   };
   submitUpdateProduct = () => {
@@ -169,11 +225,12 @@ class Product extends Component {
       id_category,
       name,
       color,
+      size,
       quantity,
       price,
       description,
       id_brand,
-      file,
+      files,
       id, 
       img,
       status
@@ -182,10 +239,6 @@ class Product extends Component {
       toast.error("Name invalid");
       return;
     } 
-    if (color.length <= 0) {
-      toast.error("Color invalid"); 
-      return;
-    }
     if (quantity <= 0) {
       toast.error("Quantity invalid");
       return;
@@ -202,7 +255,7 @@ class Product extends Component {
       toast.error("Brand invalid");
       return;
     }
-    if (file === null && img === '' ) {
+    if (files === null && img === '' ) {
       toast.error("File invalid");
       return;
     }
@@ -210,50 +263,52 @@ class Product extends Component {
       id,
       name,
       color,
+      size,
       quantity,
       id_category,
       price,
       description,
       id_brand,
-      file,
+      files,
       status
     );
   };
+
   renderBtnSubmit = () => {
     if (this.state.curr === "add") {
       return (
-        <div className="form-group">
-          <div className="col-lg-offset-2 col-lg-10">
+        <div className=" text-center">
             <button
-              onClick={() => this.submitAddProduct()}
-              className="btn-custom"
+              onClick={() => { this.submitAddProduct()}}
+              data-bs-dismiss="modal"
+              className="btn btn-primary btn-custom__add"
               type="submit"
             >
               Add
             </button>
-            <button className="btn-custom" disabled type="button">
+            <button className="btn btn-primary btn-custom__add" disabled type="button">
               Update
             </button>
-            <button className="btn-custom" onClick={() => this.reset()}>Reset</button>
+            <button className="btn btn-primary btn-custom__add " onClick={() => this.reset()}>Reset</button>
           </div>
-        </div>
       );
     } else {
       return (
-        <div className="form-group">
-          <div className="col-lg-offset-2 col-lg-10">
-            <button className="btn-custom" disabled type="submit">
+        <div className="text-center">
+          
+            <button className="btn btn-primary btn-custom__add " disabled type="submit">
               Add
             </button>
             <button
-              className="btn-custom"
-              onClick={() => this.submitUpdateProduct()}
+              className="btn btn-primary btn-custom__add "
+              onClick={() => {this.submitUpdateProduct() }}
+              data-bs-dismiss="modal"
               type="button"
             >
               Update
             </button>
-            <button className="btn-custom" onClick={() => this.reset()}>Reset</button>
-          </div>
+            <button className="btn btn-primary btn-custom__add" onClick={() => this.reset()}>Reset</button>
+         
         </div>
       );
     }
@@ -261,13 +316,14 @@ class Product extends Component {
   reset = () => {
     this.setState({
         //name: "",
-        file: null,
+        files: null,
         imagePreviewUrl: null,
         curr: "add",
         category: "category",
         brand: "brand",
         name: "",
-        color:"",
+        color:null,
+        size:null,
         quantity:"",
         price: "",
         img: "",
@@ -289,7 +345,7 @@ class Product extends Component {
               })
             }
           >
-            <a>{element.name}</a>
+            {element.name}
           </li>
         );
       });
@@ -301,13 +357,13 @@ class Product extends Component {
     if (this.props.brand) {
       return this.props.brand.map((element, index) => {
         return (
-          <li
+          <option
             onClick={() =>
               this.setState({ brand: element.name, id_brand: element._id })
             }
           >
-            <a>{element.name}</a>
-          </li>
+            {element.name}
+          </option>
         );
       });
     } else {
@@ -332,24 +388,333 @@ class Product extends Component {
             <h3 className="page-header">
               <i className="fa fa-table" /> Table
             </h3>
-            <ol className="breadcrumb">
-              <li>
-                <i className="fa fa-home" />
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <i className="fa fa-table" />Table
-              </li>
-              <li>
-                <i className="fa fa-th-list" />Product Manager
-              </li>
-            </ol>
+            <nav aria-label="breadcrumb">
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
+                <li className="breadcrumb-item">Library</li>
+                <li className="breadcrumb-item active" aria-current="page">Products manager</li>
+              </ol>
+            </nav>
           </div>
         </div>
         <div className="row">
           <div className="col-lg-12">
             <section className="panel">
-              <header className="panel-heading">Advanced Table</header>
+              <button type="button" 
+                className="btn btn-primary pull-right mr-2 mb-2" 
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal" 
+                >
+                  New product
+              </button>
+              <div className="modal fade " id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">Product</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                      </div>
+                      <div className="modal-body">
+                        <div className="row">
+                            <div className="col-lg-12">
+                              <section className="panel">
+                                  <div className="form" id="from-book">
+                                    <div
+                                      className="form-validate form-horizontal"
+                                      id="feedback_form"
+                                      method="get"
+                                      action=""
+                                    >
+                                      <div className="form-group ">
+                                        <label for="cname" className="control-label col-lg-2">
+                                          Name <span className="required">*</span>
+                                        </label>
+                                        <div className="col-lg-12">
+                                          <input
+                                            onChange={e => {
+                                              this.setState({
+                                                name: e.target.value
+                                              });
+                                            }}
+                                            value={this.state.name}
+                                            className="form-control"
+                                            id="cname"
+                                            name="fullname"
+                                            minlength="5"
+                                            type="text"
+                                            required
+                                          />
+                                        </div>
+                                        
+                                      </div>
+                                      <div className="form-group ">
+                                        <label for="curl" className="control-label col-lg-2">
+                                        Quantity
+                                        </label>
+                                        <div className="col-lg-12">
+                                          <input
+                                            value={this.state.quantity}
+                                            onChange={e =>
+                                              this.setState({
+                                                quantity: e.target.value
+                                              })
+                                            }
+                                            className="form-control "
+                                            id="curl"
+                                            type="text"
+                                            name="url"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="form-group ">
+                                        <label for="color" className="control-label col-lg-2">
+                                        Color
+                                        </label>
+                                        <div className="col-lg-12 d-flex flex-wrap">
+                                          {this.props.color.map((element,index) => {
+                                            return ( 
+                                              <div className="form-check ml-2" >
+                                                <input 
+                                                  className="form-check-input" 
+                                                  type="checkbox" 
+                                                  value={element._id}
+                                                  onChange={this.handleAddColor}
+                                                  id={element._id}
+                                                  > 
+                                                </input>
+                                                <label className="form-check-label" for={element._id} > 
+                                                  {element.name}
+                                                 </label>
+                                              </div> 
+                                              );
+                                          })}
+                                        </div>
+                                        <div className="form-group ">
+                                            <label for="color" className="control-label col-lg-2">
+                                            Size
+                                            </label>
+                                            <div className="col-lg-12 d-flex flex-wrap">
+                                              {this.props.size.map((element) => {
+                                                return ( 
+                                                  <div className="form-check ml-2" >
+                                                    <input 
+                                                      className="form-check-input" 
+                                                      type="checkbox" 
+                                                      value={element._id}
+                                                      onChange={this.handleAddSize} 
+                                                      id={element._id}
+                                                      > 
+                                                    </input>
+                                                    <label className="form-check-label" for={element._id} >
+                                                      {element.name}
+                                                    </label>  
+                                                  </div> 
+                                                  );
+                                              })}
+                                          </div>
+                                        </div>
+                                        
+                                        {/* <div className="col-lg-12 d-flex flex-wrap">
+                                          <select className="form-select" onChange={this.handleSelectColor}>
+                                            <option value="">Select color</option>
+                                              {
+                                                  this.props.color.map(element => (
+                                                      <option value={element.name} key={element._id}>
+                                                          {element.name}
+                                                      </option>
+                                                  ))
+                                              }
+                                          </select>
+                                         
+                                        </div> */}
+                                        
+                                      </div>
+                                      <div className="form-group ">
+                                        <label for="curl" className="control-label col-lg-2">
+                                          Price
+                                        </label>
+                                        <div className="col-lg-12">
+                                          <input
+                                            value={this.state.price}
+                                            onChange={e =>
+                                              this.setState({
+                                                price: e.target.value
+                                              })
+                                            }
+                                            className="form-control "
+                                            id="curl"
+                                            type="text"
+                                            name="url"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="form-group ">
+                                        <label for="cname" className="control-label col-lg-2">
+                                          Description <span className="required">*</span>
+                                        </label>
+                                        <div className="col-lg-12">
+                                          <input
+                                            value={this.state.description}
+                                            onChange={e =>
+                                              this.setState({
+                                                description: e.target.value
+                                              })
+                                            }
+                                            className="form-control"
+                                            id="subject"
+                                            name="subject"
+                                            minlength="5"
+                                            type="text"
+                                            required
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="d-flex">
+                                        <div className="form-group col-lg-6 ">
+                                          <label  className="control-label col-lg-2">
+                                            Category
+                                          </label>
+                                          <div className="dropdown btn-group form-control ">
+                                            <a  
+                                              type="button"
+                                              className="btn btn-default  dropdown-toggle  "
+                                              data-bs-toggle="dropdown"
+                                              id="dropdownMenuButton1"
+                                              // aria-haspopup="true" 
+                                              aria-expanded="false"
+                                            >
+                                              {this.state.category} 
+                                            </a>
+                                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                              {this.renderMenuCategory()}
+                                            </ul>
+                                          </div>
+                                          
+                                            {/* <select className="form-select form-control col-lg-12" >
+                                                <option
+                                                    value=""
+                                                    disabled
+                                                    selected 
+                                                    style={{ display: "none"  }}
+                                                >
+                                                  {this.state.category} 
+                                                </option>
+                                                  
+                                                  {
+                                                    this.renderMenuCategory()
+                                                  }
+                                            </select> */}
+                                          
+                                          
+                                        </div>
+                                        <div className="form-group col-lg-6">
+                                          <label className="control-label col-lg-2">
+                                            Brand
+                                          </label>
+                                          <div className=" dropdown btn-group form-control">
+                                            <button
+                                              style={{ width: "200px" }}
+                                              type="button"
+                                              className="btn btn-default dropdown-toggle"
+                                              data-bs-toggle="dropdown"
+                                              data-toggle="dropdown"
+                                            >
+                                              {this.state.brand} <span className="caret" />
+                                            </button>
+                                            <ul className="dropdown-menu" role="menu">
+                                              {this.renderMenuBrand()}
+                                            </ul>
+                                          </div>
+                                          {/* <select className="form-select form-control col-lg-12" >
+                                                <option
+                                                    value=""
+                                                    disabled
+                                                    selected 
+                                                    style={{ display: "none"  }}
+                                                >
+                                                    {this.state.brand}
+                                                </option>
+                                                
+                                                  {
+                                                    this.renderMenuBrand()
+                                                  }
+                                            </select> */}
+                                        </div>
+                                      </div>
+                                      
+                                      <div className="form-group ">
+                                        <label for="comment" className="control-label col-lg-2">
+                                          Image upload{" "}
+                                        </label>
+                                        <div className="col-lg-12">
+                                          <input
+                                            className="form-control "
+                                            type="file"
+                                            id="ccomment"
+                                            name="comment"
+                                            required
+                                            onChange={e =>
+                                              this.handleChangeImg(e.target.files[0])
+                                            }
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="form-group ">
+                                        <label for="comment" className="control-label col-lg-2">
+                                          Image
+                                        </label>
+                                        <div className="col-lg-12">
+                                          <img
+                                            src={this.state.img}
+                                            style={{ maxWidth: "100px" }}
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="form-group d-flex">
+                                        <label for="comment" className="control-label col-lg-2">
+                                          Status
+                                        </label>
+                                        <div className="col-lg-12 d-flex" >
+                                          
+                                            <div className="form-check">
+                                              <input
+                                                checked={this.state.status}
+                                                onClick={() => this.setState({ status: true })}
+                                                type="radio"
+                                                name="flexRadioDefault" id="flexRadioDefault1"
+                                                className="form-check-input"
+                                              />
+                                               <label className="form-check-label" for="flexRadioDefault1">True</label> 
+                                            </div>
+                                            <div className="form-check ml-2">
+                                              <input
+                                                checked={!this.state.status}
+                                                onClick={() => this.setState({ status: false })}
+                                                type="radio"
+                                                name="flexRadioDefault" id="flexRadioDefault1" 
+                                                className="form-check-input"
+                                              />
+                                              <label className="form-check-label" for="flexRadioDefault1">False</label>
+                                            </div>
+                                          
+                                        </div>
+                                      </div>
+                                      {this.renderBtnSubmit()}
+                                    </div>
+                                  </div>
+                               
+                              </section>
+                            </div>
+                          </div>
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+     
               <table className="table table-striped table-advance table-hover">
                 <tbody>
                   <tr>
@@ -363,13 +728,16 @@ class Product extends Component {
                       <i className="icon_currency" /> Price
                     </th>
                     <th>
+                      <i className="fas fa-paint-brush" /> Color
+                    </th>
+                    <th>
+                      <i className="fas fa-list-alt" /> Size
+                    </th>
+                    <th>
                     <i class="fas fa-calculator"/> Quantity
                     </th>
                     <th>
-                    <i class="fas fa-calculator"/> Color
-                    </th>
-                    <th>
-                      <i className="icon_pin_alt" /> Description
+                      <i className="fas fa-pen-alt" /> Description
                     </th>
                     <th>
                       <i className="icon_check_alt2" /> Status
@@ -383,24 +751,33 @@ class Product extends Component {
                       <tr>
                         <td>
                           {
-                             <img class="avatar" src={element.img} alt="Product" />
+                             <img class="avatar" src={element.images[0]} alt="Product" />
                           }
                         </td>
-                        <td>{element.name}</td>
+                        <td style={{ width: "20%" }}>{element.name}</td>
                         <td>{element.price}</td>
+                        <td>{element.colorProducts.colorProduct.map(item => (
+                            <p key={item?._id?._id}>
+                                {item?._id?.name}
+                            </p> ))}
+                        </td>
+                        <td>{element.sizeProducts.sizeProduct.map(item => (
+                            <p key={item?._id?._id}>
+                                {item?._id?.name}
+                            </p> ))}
+                        </td>
                         <td>{element.quantity}</td>
-                        <td>{element.color}</td>
-                        <td style={{ width: "40%" }}>{element.description}</td>
+                        <td style={{ width: "30%" }}>{element.description}</td>
                         <td>{element.status.toString()}</td>
                         <td>
-                          <div className="btn-group">
+                          <div className="btn-group"  >
                             <a
+                              data-bs-toggle="modal" data-bs-target="#exampleModal"
                               onClick={() =>
                                 this.setState({
                                   curr: "update",
                                   name: element.name,
                                   quantity: element.quantity,
-                                  color: element.color,
                                   price: element.price,
                                   description: element.description,
                                   category: this.getNameCategoryByID(
@@ -411,7 +788,7 @@ class Product extends Component {
                                   brand: this.getNameBrandByID(
                                     element.id_brand
                                   ),
-                                  img: element.img,
+                                  img: element.images[0],
                                   id: element._id,
                                   status: element.status
                                 })
@@ -437,214 +814,7 @@ class Product extends Component {
             </section>
           </div>
         </div>
-        <div className="row">
-          <div className="col-lg-12">
-            <section className="panel">
-              <header className="panel-heading">Form validations</header>
-              <div className="panel-body">
-                <div className="form" id="from-book">
-                  <div
-                    className="form-validate form-horizontal"
-                    id="feedback_form"
-                    method="get"
-                    action=""
-                  >
-                    <div className="form-group ">
-                      <label for="cname" className="control-label col-lg-2">
-                        Name <span className="required">*</span>
-                      </label>
-                      <div className="col-lg-10">
-                        <input
-                          onChange={e => {
-                            this.setState({
-                              name: e.target.value
-                            });
-                          }}
-                          value={this.state.name}
-                          className="form-control"
-                          id="cname"
-                          name="fullname"
-                          minlength="5"
-                          type="text"
-                          required
-                        />
-                      </div>
-                      
-                    </div>
-                    <div className="form-group ">
-                      <label for="curl" className="control-label col-lg-2">
-                      Quantity
-                      </label>
-                      <div className="col-lg-10">
-                        <input
-                          value={this.state.quantity}
-                          onChange={e =>
-                            this.setState({
-                              quantity: e.target.value
-                            })
-                          }
-                          className="form-control "
-                          id="curl"
-                          type="text"
-                          name="url"
-                        />
-                      </div>
-                    </div>
-                    <div className="form-group ">
-                      <label for="curl" className="control-label col-lg-2">
-                      Color
-                      </label>
-                      <div className="col-lg-10">
-                        <input
-                          value={this.state.color}
-                          onChange={e =>
-                            this.setState({
-                              color: e.target.value
-                            })
-                          }
-                          className="form-control "
-                          id="curl"
-                          type="text"
-                          name="url"
-                        />
-                      </div>
-                    </div>
-                    <div className="form-group ">
-                      <label for="curl" className="control-label col-lg-2">
-                        Price
-                      </label>
-                      <div className="col-lg-10">
-                        <input
-                          value={this.state.price}
-                          onChange={e =>
-                            this.setState({
-                              price: e.target.value
-                            })
-                          }
-                          className="form-control "
-                          id="curl"
-                          type="text"
-                          name="url"
-                        />
-                      </div>
-                    </div>
-                    <div className="form-group ">
-                      <label for="cname" className="control-label col-lg-2">
-                        Description <span className="required">*</span>
-                      </label>
-                      <div className="col-lg-10">
-                        <input
-                          value={this.state.description}
-                          onChange={e =>
-                            this.setState({
-                              description: e.target.value
-                            })
-                          }
-                          className="form-control"
-                          id="subject"
-                          name="subject"
-                          minlength="5"
-                          type="text"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="form-group ">
-                      <label for="comment " className="control-label col-lg-2">
-                        Category
-                      </label>
-                      <div className="btn-group col-lg-10">
-                        <button
-                          style={{ width: "200px" }}
-                          type="button"
-                          className="btn btn-default dropdown-toggle"
-                          data-toggle="dropdown"
-                        >
-                          {this.state.category} <span className="caret" />
-                        </button>
-                        <ul className="dropdown-menu" role="menu">
-                          {this.renderMenuCategory()}
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="form-group ">
-                      <label for="comment" className="control-label col-lg-2">
-                        Brand
-                      </label>
-                      <div className="btn-group col-lg-10">
-                        <button
-                          style={{ width: "200px" }}
-                          type="button"
-                          className="btn btn-default dropdown-toggle"
-                          data-toggle="dropdown"
-                        >
-                          {this.state.brand} <span className="caret" />
-                        </button>
-                        <ul className="dropdown-menu" role="menu">
-                          {this.renderMenuBrand()}
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="form-group ">
-                      <label for="comment" className="control-label col-lg-2">
-                        Image upload{" "}
-                      </label>
-                      <div className="col-lg-10">
-                        <input
-                          className="form-control "
-                          type="file"
-                          id="ccomment"
-                          name="comment"
-                          required
-                          onChange={e =>
-                            this.handleChangeImg(e.target.files[0])
-                          }
-                        />
-                      </div>
-                    </div>
-                    <div className="form-group ">
-                      <label for="comment" className="control-label col-lg-2">
-                        Image
-                      </label>
-                      <div className="col-lg-10">
-                        <img
-                          src={this.state.img}
-                          style={{ maxWidth: "100px" }}
-                        />
-                      </div>
-                    </div>
-                    <div className="form-group">
-                    <label for="comment" className="control-label col-lg-2">
-                        Status
-                      </label>
-                      <div className="col-lg-10" >
-                        <form>
-                          <label class="radio-inline">
-                            <input
-                              checked={this.state.status}
-                              onClick={() => this.setState({ status: true })}
-                              type="radio"
-                              name="optradio"
-                            />True
-                          </label>
-                          <label class="radio-inline">
-                            <input
-                              checked={!this.state.status}
-                              onClick={() => this.setState({ status: false })}
-                              type="radio"
-                              name="optradio"
-                            />False
-                          </label>
-                        </form>
-                      </div>
-                    </div>
-                    {this.renderBtnSubmit()}
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        </div>
+        
       </section>
     );
   }

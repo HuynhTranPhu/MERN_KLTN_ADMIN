@@ -85,7 +85,7 @@ export const listCategory = () => async (dispatch) =>{
   try{
       dispatch({type: CATEGORY_LIST_REQUEST});
        //const {data} =await axios.get("/api/products");
-       const {data} = await axios.get(`${url}/category`);
+       const {data} = await axios.get(`${url}/categorys`);
       //console.log({data});
       dispatch({type: CATEGORY_LIST_SUCCESS, payload: data});
       

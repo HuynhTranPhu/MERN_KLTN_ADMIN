@@ -17,23 +17,24 @@ const History = (props) => {
         <section id="container" className="">
         <NavbarContainer /> 
         <Slider />
+        <div className="history__breadcrumb">
+            <nav aria-label="breadcrumb">
+            <ol className="breadcrumb  ">
+                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
+                <li className="breadcrumb-item">Library</li>
+                <li className="breadcrumb-item active" aria-current="page">Order manager</li>
+            </ol>
+            </nav>
+        </div>
         <div
-
         style={{
             paddingTop:"100px",
-            padding: "10px 10px",
-            marginLeft:"200px",
+            padding: "10px",
+            marginLeft:"350px",
             alignItems: "center",
         }}
         >
-        <h1 className="Order-title">.............</h1>
-            {/* {loading?(
-            <LoadingBox></LoadingBox>
-            ):
-            error? (
-                <MessageBox variant="danger">{error}</MessageBox>
-            ):( */}
-
+        
                 <div className="cart-page">
                 <div className="container-fluid">
                     <div className="row">
@@ -108,8 +109,6 @@ const History = (props) => {
                 </div>
             </div>
 
-             {/* )
-            }  */}
 
         </div>
             

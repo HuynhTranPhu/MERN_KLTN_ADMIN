@@ -97,13 +97,11 @@ export const updateUser = (email, name, status) => async (dispatch, getState) =>
     dispatch(updateUserSuccess())
     dispatch(getUser())
 }
-export const deleteUser = (email) => async (dispatch, getState) => {
+export const deleteUser = (id) => async (dispatch, getState) => {
     //let res
     try {
         //res = 
-        await axios.put(`${url}/admin/deleteuser`,{
-            email: email
-        })
+        await axios.put(`${url}/admin/deleteuser/${id}`)
     }
     catch (err) {
         console.log(err)

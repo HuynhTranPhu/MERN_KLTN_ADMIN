@@ -1,13 +1,15 @@
-
+.history__breadcrumb{
+    padding-top: 80px;
+    margin-left: 190px;
+}
 .cart-page {
     position: relative;
-    margin-top: 30px;
+    margin-top: 5px;
 }
 
 .cart-page .cart-page-inner {
     padding: 30px;
     margin-bottom: 30px;
-    background: #ffffff;
 }
 
 .cart-page .table {

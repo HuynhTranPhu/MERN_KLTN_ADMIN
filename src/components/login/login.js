@@ -17,9 +17,9 @@ class Login extends Component {
                 <i className="icon_lock_alt" />
               </p>
               <center>{this.props.notiLogin ? this.props.notiLogin: ''}</center>
-              <div className="input-group">
-                <span className="input-group-addon">
-                  <i className="icon_profile" />
+              <div className="input-group mb-3">
+                <span className="input-group-text">
+                  <i className="fas fa-user " />
                 </span>
                 <input
                   type="text"
@@ -30,9 +30,9 @@ class Login extends Component {
                   onChange={(e) => this.setState({email: e.target.value})}
                 />
               </div>
-              <div className="input-group">
-                <span className="input-group-addon">
-                  <i className="icon_key_alt" />
+              <div className="input-group mb-4">
+                <span className="input-group-text">
+                  <i className="fas fa-key " />
                 </span>
                 <input
                   type="password"
@@ -42,17 +42,13 @@ class Login extends Component {
                   onChange={(e) => this.setState({password: e.target.value})}
                 />
               </div>
-              <label className="checkbox">
-                <input type="checkbox" value="remember-me" /> Remember me
-                <span className="pull-right">
-                  {" "}
-                  <a href="#"> Forgot Password?</a>
-                </span>
-              </label>
-              <button className="btn btn-primary btn-lg btn-block"
-               onClick={() => this.props.loginSubmit(this.state.email, this.state.password)}>
-                Login
-              </button>
+              <div class="d-grid">
+                  <button className="btn btn-primary rounded-pill "
+                  onClick={() => this.props.loginSubmit(this.state.email, this.state.password)}>
+                    Login
+                  </button>
+              </div>
+             
             </div>
           </div>
         </div>

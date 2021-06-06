@@ -47,15 +47,12 @@ const Home = (props) => {
                 <h3 className="page-header">
                   <i className="fa fa-laptop" /> Dashboard
                 </h3>
+                <nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
-                  <li>
-                    <i className="fa fa-home" />
-                    <a href="index.html">Home</a>
-                  </li>
-                  <li>
-                    <i className="fa fa-laptop" />Dashboard
-                  </li>
+                  <li className="breadcrumb-item">Home</li>
+                  <li className="breadcrumb-item active" aria-current="page">Dashboard</li>
                 </ol>
+              </nav>
               </div>
             </div>
 

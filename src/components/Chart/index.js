@@ -38,8 +38,8 @@ const Char = () => {
     return (
         <div >
             <div className="select__option">
-                <h5>Select year</h5>
-                <select onChange={handleSelect}>
+                <h6>Select year</h6>
+                <select className="form-select" onChange={handleSelect}>
                     <option
                         value="2021"
                         disabled
@@ -52,7 +52,7 @@ const Char = () => {
                     <option value="2022">2022</option>
                     <option value="2023">2023</option>
                 </select>
-                <h5 className="select__cate">Select Category</h5>
+                <h6 className="select__cate">Select Category</h6>
                 {/* <select onChange={handleSelectCate}>
                     <option
                         value="2021"
@@ -66,10 +66,10 @@ const Char = () => {
                     <option value="2022">2022</option>
                     <option value="2023">2023</option>
                 </select> */}
-                <select onChange={handleSelectCate}>
+                <select className="form-select" onChange={handleSelectCate}>
                     <option value="">Select category</option>
                     {
-                        category.map(category => (
+                        category?.map(category => (
                             <option value={category.name} key={category._id}>
                                 {category.name}
                             </option>
@@ -83,7 +83,7 @@ const Char = () => {
                     labels: ['January', 'February', 'March', 'April', 'May', 'June','July','August','September','November','December'],
                     datasets:[
                         {
-                            label: 'Ordered',
+                            label: 'Orders',
                             //data: getOrderByYears.arrOrder,
                             data: getOrderByCategoryYears.arrCategoryOrder?getOrderByCategoryYears.arrCategoryOrder:
                             getOrderByYears.arrOrder,

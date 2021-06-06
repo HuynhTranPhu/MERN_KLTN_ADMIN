@@ -46,11 +46,10 @@ const Promotion = (props) => {
     <Slider />
     <div className="promotion">
         <div className="promotion__category">
-                <h5 className="promotion__category-text">Select category</h5>
-                <select onChange={handleSelect}>
-                    <option value="">Select category</option>
+                <select className="form-select" onChange={handleSelect}>
+                    <option selected value="">Select category</option>
                     {
-                        category.map(category => (
+                        category?.map(category => (
                             <option value={category.name} key={category._id}>
                                 {category.name}
                             </option>
@@ -59,16 +58,18 @@ const Promotion = (props) => {
                 </select>
         </div>
         <div className="promotion__input">
-              <h5 className="promotion__input-text">Enter number promotion</h5>
-               <input type="number"
-                onChange={handleDiscount}
+              <h6 className="promotion__input-text">Enter number promotion</h6>
+               <input 
+                type="number"
+                className="form-control"
+                  onChange={handleDiscount}
                />
         </div>
         <div className="promotion__increase">
-              <button onClick={handleIn}>Increase</button>
+              <button className="btn btn-primary" onClick={handleIn}>Increase</button>
         </div>
         <div className="promotion__decrease">
-              <button onClick={handleDe}>Decrease</button>
+              <button className="btn btn-primary" onClick={handleDe}>Decrease</button>
         </div>
     </div>
     

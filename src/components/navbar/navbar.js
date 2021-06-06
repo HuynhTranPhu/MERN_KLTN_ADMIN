@@ -212,30 +212,22 @@ class Navbar extends Component {
                             </ul>
                         </li> */}
                         <li className="dropdown">
-                            <a data-toggle="dropdown" className="dropdown-toggle" href="#">
+                            <p className="dropdown-toggle" data-bs-toggle="dropdown">
                                 <span className="profile-ava">
                                     <img alt="" src="/img/avatar-mini2.jpg" />
                                 </span>
                                 <span className="username">Trần Phú</span>
                                 <b className="caret"></b>
-                            </a>
-                            <ul className="dropdown-menu extended logout">
-                                <div className="log-arrow-up"></div>
-                                <li className="eborder-top">
-                                    <Link to="/"><i className="icon_profile"></i> MY PROFILE</Link>
+                            </p>
+                            <ul className="dropdown-menu ">
+                                <li className="dropdown-item">
+                                    <Link to="/"><i className="fas fa-user"></i> MY PROFILE</Link>
                                 </li>
-                                <li>
-                                    <a onClick={() => this.props.logout()}><i className="icon_key_alt"></i> LOG OUT</a>
+                                <li className="dropdown-item"> 
+                                    <Link to="#" onClick={() => this.props.logout()}><i className="fas fa-key"></i> LOG OUT</Link>
                                 </li>
-                                {/* <li>
-                                    <a href="documentation.html"><i className="icon_key_alt"></i> Documentation</a>
-                                </li>
-                                <li>
-                                    <a href="documentation.html"><i className="icon_key_alt"></i> Documentation</a>
-                                </li> */}
                             </ul>
                         </li>
-
                     </ul>
 
                 </div>
