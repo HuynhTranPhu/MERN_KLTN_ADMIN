@@ -1,8 +1,7 @@
-import React, {  useEffect, useState } from "react";
+import React, {  useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { getCustomerOrders } from "../../actions/order.action";
-import { getProduct, listProducts } from "../../actions/product.action";
+import { listProducts } from "../../actions/product.action";
 import Char from "../Chart";
 // class Home extends Component {
 //   constructor() {

@@ -319,7 +319,7 @@ class Color extends Component {
                         <td>{element.status.toString()}</td>
                         <td>
                           <div className="btn-group" data-bs-toggle="modal" data-bs-target="#exampleModal" >
-                            <a
+                            <span
                               onClick={() =>
                                 this.setState({
                                   currname: element.name,
@@ -333,7 +333,7 @@ class Color extends Component {
                               className="btn btn-success"
                             >
                               <i className="icon_check_alt2" />
-                            </a>
+                            </span>
                           </div>
                         </td>
                       </tr>

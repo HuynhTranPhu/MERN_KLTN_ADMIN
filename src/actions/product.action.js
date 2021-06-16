@@ -199,9 +199,114 @@ export const getAllCategory = () => async (dispatch) =>  {
     }
     dispatch(setAllCategory(res.data.data))
 }
+//banner
+export const getBanner = () => async (dispatch) => {
+    let res
+    try {
+        res = await axios.get(`${url}/admin/banners` )
+    }
+    catch(err) {
+        return
+    }
+    dispatch(setBanner(res.data))
+
+}
+export const addBanner =  (content, categoryName, status, disCount, id_category) => async (dispatch) => {
+    dispatch(resetBanner())
+    //let res
+    try {
+        //res = 
+        await axios.post(`${url}/admin/banners/add`, {
+            content: content,
+            categoryName:categoryName,
+            status:status,
+            disCount:disCount,
+            id_category:id_category
+        })
+    }
+    catch(err) {
+        dispatch(addBannerFail())
+        return
+    } 
+    dispatch(addBannerSuccess())
+    dispatch(getBanner())
+}
+
+export const updateBanner =  (id,content, categoryName, status, disCount,id_category) => async (dispatch) => {
+    //let res
+    try {
+        //res = 
+        await axios.put(`${url}/admin/banners/update`, {
+            id: id,
+            content: content,
+            categoryName:categoryName,
+            status:status,
+            disCount:disCount,
+            id_category:id_category
+        })
+    }
+    catch(err) {
+        dispatch(updateBannerFail())
+        return
+    } 
+    dispatch(updateBannerSuccess())
+    dispatch(getBanner())
+}
+
+//promotion Code
+export const getPromotionCode = () => async (dispatch) => {
+    let res
+    try {
+        res = await axios.get(`${url}/admin/promocodes` )
+    }
+    catch(err) {
+        return
+    }
+    dispatch(setPromotionCode(res.data))
+
+}
+export const addPromotionCode =  (promotion_code, content, price_discount) => async (dispatch) => {
+    dispatch(resetPromotionCode())
+    //let res
+    try {
+        //res = 
+        await axios.post(`${url}/admin/promocodes/add`, {
+            promotion_code: promotion_code,
+            content:content,
+            price_discount:price_discount
+        })
+    }
+    catch(err) {
+        dispatch(addPromotionCodeFail())
+        return
+    } 
+    dispatch(addPromotionCodeSuccess())
+    dispatch(getPromotionCode())
+}
+
+export const updatePromotionCode =  (id, promotion_code, content, price_discount, status) => async (dispatch) => {
+    //let res
+    try {
+        //res = 
+        await axios.put(`${url}/admin/promocodes/update`, {
+            id: id,
+            promotion_code: promotion_code,
+            status:status,
+            content:content,
+            price_discount:price_discount
+        })
+    }
+    catch(err) {
+        dispatch(updatePromotionCodeFail())
+        return
+    } 
+    dispatch(updatePromotionCodeSuccess())
+    dispatch(getPromotionCode())
+}
 
 
 
+//brand
 export const getBrand = () => async (dispatch, getState) => {
     let res
     try {
@@ -259,6 +364,14 @@ export const setAllCategory = (data) => ({
 
 export const setBrand = (data) => ({
     type: productTypes.SET_BRAND,
+    data
+})
+export const setPromotionCode = (data) => ({
+    type: productTypes.SET_PROMOTION_CODE,
+    data
+})
+export const setBanner = (data) => ({
+    type: productTypes.SET_BANNER,
     data
 })
 export const setAllBrand = (data) => ({
@@ -338,6 +451,7 @@ export const updateBrandFail = () => ({
 export const resetBrand = () => ({
     type: productTypes.RESET_BRAND
 })
+
 //color
 export const addColorSuccess = () =>({
     type: productTypes.ADD_COLOR_SUCCESS
@@ -354,6 +468,40 @@ export const updateColorFail = () => ({
 export const resetColor = () => ({
     type: productTypes.RESET_COLOR
 })
+//banner
+export const addBannerSuccess = () =>({
+    type: productTypes.ADD_BANNER_SUCCESS
+})
+export const addBannerFail = () => ({
+    type: productTypes.ADD_BANNER_FAIL
+})
+export const updateBannerSuccess = () => ({
+    type: productTypes.UPDATE_BANNER_SUCCESS
+})
+export const updateBannerFail = () => ({
+    type: productTypes.UPDATE_BANNER_FAIL
+})
+export const resetBanner = () => ({
+    type: productTypes.RESET_BANNER
+})
+
+//promotion code
+export const addPromotionCodeSuccess = () =>({
+    type: productTypes.ADD_PROMOTION_CODE_SUCCESS
+})
+export const addPromotionCodeFail = () => ({
+    type: productTypes.ADD_PROMOTION_CODE_FAIL
+})
+export const updatePromotionCodeSuccess = () => ({
+    type: productTypes.UPDATE_PROMOTION_CODE_SUCCESS
+})
+export const updatePromotionCodeFail = () => ({
+    type: productTypes.UPDATE_PROMOTION_CODE_FAIL
+})
+export const resetPromotionCode = () => ({
+    type: productTypes.RESET_PROMOTION_CODE
+})
+
 //size
 export const addSizeSuccess = () =>({
     type: productTypes.ADD_SIZE_SUCCESS

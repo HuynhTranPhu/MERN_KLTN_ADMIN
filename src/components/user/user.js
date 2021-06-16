@@ -122,7 +122,6 @@ class User extends Component {
   updateUser = () => {
     const {
       email,
-      password,
       name,
       status
     } = this.state;
@@ -438,7 +437,7 @@ class User extends Component {
                         <td>{element.status.toString()}</td>
                         <td>
                           <div className="btn-group"  >
-                            <a
+                            <span
                               data-bs-toggle="modal" data-bs-target="#exampleModal"
                               onClick={() =>
                                 this.setState({
@@ -453,15 +452,15 @@ class User extends Component {
                               className="btn btn-success"
                             >
                               <i className="icon_check_alt2" />
-                            </a>
-                            <a
+                            </span>
+                            <span
                               onClick={() =>
                                 this.props.deleteUser(element._id)
                               }
                               className="btn btn-danger"
                             >
                               <i className="icon_close_alt2" />
-                            </a>
+                            </span>
                           </div>
                         </td>
                       </tr>

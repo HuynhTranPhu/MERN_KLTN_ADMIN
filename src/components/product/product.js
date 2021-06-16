@@ -575,7 +575,7 @@ class Product extends Component {
                                             Category
                                           </label>
                                           <div className="dropdown btn-group form-control ">
-                                            <a  
+                                            <span  
                                               type="button"
                                               className="btn btn-default  dropdown-toggle  "
                                               data-bs-toggle="dropdown"
@@ -584,28 +584,11 @@ class Product extends Component {
                                               aria-expanded="false"
                                             >
                                               {this.state.category} 
-                                            </a>
+                                            </span>
                                             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                               {this.renderMenuCategory()}
                                             </ul>
                                           </div>
-                                          
-                                            {/* <select className="form-select form-control col-lg-12" >
-                                                <option
-                                                    value=""
-                                                    disabled
-                                                    selected 
-                                                    style={{ display: "none"  }}
-                                                >
-                                                  {this.state.category} 
-                                                </option>
-                                                  
-                                                  {
-                                                    this.renderMenuCategory()
-                                                  }
-                                            </select> */}
-                                          
-                                          
                                         </div>
                                         <div className="form-group col-lg-6">
                                           <label className="control-label col-lg-2">
@@ -771,7 +754,7 @@ class Product extends Component {
                         <td>{element.status.toString()}</td>
                         <td>
                           <div className="btn-group"  >
-                            <a
+                            <span
                               data-bs-toggle="modal" data-bs-target="#exampleModal"
                               onClick={() =>
                                 this.setState({
@@ -796,13 +779,13 @@ class Product extends Component {
                               className="btn btn-success"
                             >
                               <i className="icon_check_alt2" />
-                            </a>
-                            <a
+                            </span>
+                            <span
                               onClick={() => this.props.deleteProduct(element._id)}
                               className="btn btn-danger"
                             >
                               <i className="icon_close_alt2" />
-                            </a>
+                            </span>
                           </div>
                         </td>
                       </tr>

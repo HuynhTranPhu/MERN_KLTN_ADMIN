@@ -1,114 +1,89 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
-class Size extends Component {
+class PromotionCode extends Component {
   constructor() {
     super();
     this.state = {
-      pagination: [],
-      currname: "",
-      name: "",
+      currcode: "",
+      content:"",
+      price_discount:null,
+      code: "",
       id: null,
-      description: "",
       currType: 'add'
     };
   }
   componentWillMount() {
-    let tmp = [];
-    for (let i = 1; i <= this.props.totalpage; i++) {
-      tmp.push(i);
-    }
-    this.setState({ pagination: tmp });
+    // let tmp = [];
+    // for (let i = 1; i <= this.props.totalpage; i++) {
+    //   tmp.push(i);
+    // }
+    // this.setState({ pagination: tmp });
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.totalpage !== this.props.totalpage) {
-      let tmp = [];
-      for (let i = 1; i <= nextProps.totalpage; i++) {
-        tmp.push(i);
-      }
-      this.setState({ pagination: tmp });
-    }
+    // if (nextProps.totalpage !== this.props.totalpage) {
+    //   let tmp = [];
+    //   for (let i = 1; i <= nextProps.totalpage; i++) {
+    //     tmp.push(i);
+    //   }
+    //   this.setState({ pagination: tmp });
+    // }
     if (nextProps.isadd === false) {
-      toast.error("Please change name")
     } else if (nextProps.isadd === true) {
       this.setState({
         name: "",
-        description: "",
         currType: 'add'
       });
     }
     if (nextProps.isupdate === false) {
-     toast.error("Update fail")
+      
     } else if (nextProps.isupdate === true) {
       this.setState({
         id: null,
         name: "",
-        description: "",
         currType: 'add'
       });
     }
   }
-  renderPagination() {
-    if (this.state.pagination.length === 0) {
-      return null;
-    } else {
-      return (
-        <nav aria-label="Page navigation">
-            <ul className="pagination pagination-custom col-md-6 offset-md-3">
-            <li className="page-item page-link" onClick={() => this.props.backPage()}>
-            <a>Previous</a>
-            </li>
-            {this.state.pagination.map((element, index) => {
-              if (this.props.page === element) {
-                return (
-                  <li
-                  className="page-item page-link" href="/#"
-                    onClick={() => this.props.setPage(element)}
-                  >
-                    <a>{element}</a>
-                  </li>
-                );
-              } else {
-                return (
-                  <li className="page-item page-link" onClick={() => this.props.setPage(element)}>
-                    <a>{element}</a>
-                  </li>
-                );
-              }
-            })}
-            <li className="page-item page-link" onClick={() => this.props.nextPage()}>
-              <a>Next</a>
-            </li>
-          </ul>
-        </nav>
-        
-      );
-    }
-  }
+
   add = () => {
     const {
-      name
+      code
     } = this.state;
-    if (name.length <=0) {
-        toast.error("Name invalid");
+    if (code.length <=0) {
+        toast.error("Code invalid");
         return; 
     } 
-    this.props.addSize(this.state.name, this.state.description ,this.state.status)
+    const {
+      content
+    } = this.state;
+    if (content.length <=0) {
+        toast.error("Content invalid");
+        return; 
+    } 
+    const {
+      price_discount
+    } = this.state;
+    if (price_discount.length <=0) {
+        toast.error("Price invalid");
+        return; 
+    } 
+    this.props.addPromotionCode(this.state.code, this.state.content, this.state.price_discount)
   };
   update = () => {
     const {
-      name
+      code
     } = this.state;
-    if (name.length <=0) {
-        toast.error("Name invalid");
+    if (code.length <=0) {
+        toast.error("Code invalid");
         return; 
     } 
-    this.props.updateSize(this.state.id, this.state.name, this.state.description, this.state.status)
+    this.props.updatePromotionCode(this.state.id, this.state.code, this.state.content, this.state.price_discount, this.state.status)
   };
   renderBtn = () => {
     if (this.state.currType === "add") {
       return (
-       
+        
           <div className="text-center">
             <button
               onClick={() => this.add()}
@@ -119,7 +94,7 @@ class Size extends Component {
             </button>
             <button
               disabled
-              onClick={() =>this.update()}
+              onClick={() =>this.update() }
               className="btn btn-primary btn-custom__add"
             >
               Update
@@ -131,11 +106,10 @@ class Size extends Component {
               Reset
             </button>
           </div>
-        
+       
       );
     } else {
       return (
-       
           <div className="text-center">
             <button
               disabled
@@ -145,7 +119,7 @@ class Size extends Component {
               Add
             </button>
             <button
-              onClick={() =>this.update()}
+              onClick={() => this.update() }
               data-bs-dismiss="modal"
               className="btn btn-primary btn-custom__add"
             >
@@ -158,15 +132,15 @@ class Size extends Component {
               Reset
             </button>
           </div>
-      
       );
     }
   };
   reset = () => {
       this.setState({
         id: null,
-        name: "",
-        description:"",
+        content:"",
+        price_discount:null,
+        code: "",
         currType: 'add'
       })
   }
@@ -182,7 +156,7 @@ class Size extends Component {
               <ol className="breadcrumb">
                 <li className="breadcrumb-item" ><Link to="/">Home</Link></li>
                 <li className="breadcrumb-item">Library</li>
-                <li className="breadcrumb-item active" aria-current="page">Size Manager</li>
+                <li className="breadcrumb-item active" aria-current="page">Promotion Code Manager</li>
               </ol>
             </nav>
           </div>
@@ -190,42 +164,42 @@ class Size extends Component {
         <div className="row">
           <div className="col-lg-12">
             <section className="panel">
-            <button type="button" 
+              <button type="button" 
                   className="btn btn-primary pull-right mr-2 mb-2" 
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal" 
                   >
-                    New size
+                    New Code
                 </button>
                 <div className="modal fade " id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                       <div className="modal-content">
                         <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">Size</h5>
+                          <h5 className="modal-title" id="exampleModalLabel">Promotion Code</h5>
                           <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
                         </div>
                         <div className="modal-body">
                           <div className="row">
                             <div className="col-lg-12">
                               <section className="panel">
-                              
+                                
                                   <div className="form">
                                     <div className="form-validate form-horizontal">
                                       <div className="form-group ">
-                                        <label for="cname" className="control-label col-lg-2">
-                                          Name <span className="required">*</span>
+                                        <label for="content" className="control-label col-lg-2">
+                                          Content <span className="required">*</span>
                                         </label>
                                         <div className="col-lg-12">
                                           <input
                                             onChange={e => {
                                               this.setState({
-                                                name: e.target.value
+                                                content: e.target.value
                                               });
                                             }}
-                                            value={this.state.name}
+                                            value={this.state.content}
                                             className="form-control"
-                                            id="cname"
-                                            name="fullname"
+                                            id="content"
+                                            name="content"
                                             minlength="5"
                                             type="text"
                                             required
@@ -234,21 +208,42 @@ class Size extends Component {
                                       </div>
                                       <div className="form-group ">
                                         <label for="cname" className="control-label col-lg-2">
-                                          Description 
+                                          Code <span className="required">*</span>
                                         </label>
                                         <div className="col-lg-12">
                                           <input
                                             onChange={e => {
                                               this.setState({
-                                                description: e.target.value
+                                                code: e.target.value
                                               });
                                             }}
-                                            value={this.state.description}
+                                            value={this.state.code}
                                             className="form-control"
                                             id="cname"
-                                            name="fullname"
+                                            name="code"
                                             minlength="5"
                                             type="text"
+                                            required
+                                          />
+                                        </div>
+                                      </div>
+                                      <div className="form-group ">
+                                        <label for="price" className="control-label col-lg-2">
+                                          Discount <span className="required">*</span>
+                                        </label>
+                                        <div className="col-lg-12">
+                                          <input
+                                            onChange={e => {
+                                              this.setState({
+                                                price_discount: e.target.value
+                                              });
+                                            }}
+                                            value={this.state.price_discount}
+                                            className="form-control"
+                                            id="price"
+                                            name="code"
+                                            minlength="5"
+                                            type="number"
                                             required
                                           />
                                         </div>
@@ -259,7 +254,7 @@ class Size extends Component {
                                         </label>
                                         <div className="col-lg-12 d-flex" >
                                           
-                                            <div className="form-check ">
+                                            <div class="form-check">
                                               <input
                                                 checked={this.state.status}
                                                 onClick={() => this.setState({ status: true })}
@@ -269,7 +264,7 @@ class Size extends Component {
                                               />
                                               <label className="form-check-label" for="flexRadioDefault1">True</label>
                                             </div>
-                                            <div className="form-check ml-2">
+                                            <div class="form-check ml-2">
                                               <input
                                                 checked={!this.state.status}
                                                 onClick={() => this.setState({ status: false })}
@@ -279,12 +274,13 @@ class Size extends Component {
                                               />
                                               <label className="form-check-label" for="flexRadioDefault1">False</label>
                                             </div>
-                                         
+                                        
                                         </div>
                                       </div>
                                       {this.renderBtn()}
                                     </div>
                                   </div>
+                              
                               </section>
                             </div>
                           </div>
@@ -295,14 +291,18 @@ class Size extends Component {
                       </div>
                     </div>
                   </div>
+
               <table className="table table-striped table-advance table-hover">
                 <tbody>
                   <tr>
                     <th>
-                      <i className="icon_profile" /> Name
+                      <i className="fas fa-bars" /> Content
                     </th>
                     <th>
-                      <i className="fas fa-pen-alt" /> Description
+                      <i className="fas fa-chart-line" /> Price Discount
+                    </th>
+                    <th>
+                      <i className="icon_profile" /> Code
                     </th>
                     <th>
                       <i className="icon_check_alt2" /> Status
@@ -311,21 +311,23 @@ class Size extends Component {
                       <i className="icon_cogs" /> Action
                     </th>
                   </tr>
-                  {this.props.size.map((element, index) => {
+                  {this.props.promotionCode.map((element, index) => {
                     return (
                       <tr>
-                        <td>{element.name}</td>
-                        <td>{element.description}</td>
+                        <td>{element.content}</td>
+                        <td>{element.price_discount}</td>
+                        <td>{element.promotion_code}</td>
                         <td>{element.status.toString()}</td>
                         <td>
                           <div className="btn-group" data-bs-toggle="modal" data-bs-target="#exampleModal" >
                             <span
                               onClick={() =>
                                 this.setState({
-                                  currname: element.name,
-                                  name: element.name,
+                                  currcode: element.promotion_code,
+                                  code: element.promotion_code,
+                                  content: element.content,
+                                  price_discount: element.price_discount,
                                   id: element._id,
-                                  description:element.description,
                                   status:element.status,
                                   currType: "update"
                                 })
@@ -341,13 +343,12 @@ class Size extends Component {
                   })}
                 </tbody>
               </table>
-              {this.renderPagination()}
             </section>
           </div>
         </div>
-       
+        
       </section>
     );
   }
 }
-export default Size;
+export default PromotionCode;

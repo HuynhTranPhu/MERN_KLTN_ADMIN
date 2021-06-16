@@ -1,4 +1,4 @@
-import { productTypes, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, UPDATE_PRICE_BY_CATEGORY_FAIL, UPDATE_PRICE_BY_CATEGORY_REQUEST, UPDATE_PRICE_BY_CATEGORY_SUCCESS } from '../constants/action.types'
+import { productTypes, PRODUCT_LIST_SUCCESS, UPDATE_PRICE_BY_CATEGORY_FAIL, UPDATE_PRICE_BY_CATEGORY_REQUEST, UPDATE_PRICE_BY_CATEGORY_SUCCESS } from '../constants/action.types'
 import { combineReducers } from 'redux'
 const category = (state = { data: [], categorys:[] ,page: 1, totalpage: null }, action) => {
     switch (action.type) {
@@ -120,6 +120,92 @@ const brand = (state = {data: [], brands:[] ,page: 1, totalpage: null}, action) 
         default: return state
     }
 }
+const promotionCode = (state = {data: []}, action) => {
+    switch(action.type) {
+        case productTypes.SET_PROMOTION_CODE: {
+            return {
+                ...state,
+                data: action.data
+            }
+        }
+        case productTypes.ADD_PROMOTION_CODE_SUCCESS: {
+            return {
+                ...state,
+                isadd: true
+            }
+        }
+        case productTypes.ADD_PROMOTION_CODE_FAIL: {
+            return {
+                ...state,
+                isadd: false
+            }
+        }
+        case productTypes.UPDATE_PROMOTION_CODE_SUCCESS: {
+            return {
+                ...state,
+                isupdate: true
+            }
+        }
+        case productTypes.UPDATE_PROMOTION_CODE_FAIL: {
+            return {
+                ...state,
+                isupdate: false
+            }
+        }
+        case productTypes.RESET_PROMOTION_CODE: {
+            return {
+                ...state,
+                isadd: null,
+                isupdate: null
+            }
+        }
+        
+        default: return state
+    }
+}
+const banner = (state = {data: []}, action) => {
+    switch(action.type) {
+        case productTypes.SET_BANNER: {
+            return {
+                ...state,
+                data: action.data
+            }
+        }
+        case productTypes.ADD_BANNER_SUCCESS: {
+            return {
+                ...state,
+                isadd: true
+            }
+        }
+        case productTypes.ADD_BANNER_FAIL: {
+            return {
+                ...state,
+                isadd: false
+            }
+        }
+        case productTypes.UPDATE_BANNER_SUCCESS: {
+            return {
+                ...state,
+                isupdate: true
+            }
+        }
+        case productTypes.UPDATE_BANNER_FAIL: {
+            return {
+                ...state,
+                isupdate: false
+            }
+        }
+        case productTypes.RESET_BANNER: {
+            return {
+                ...state,
+                isadd: null,
+                isupdate: null
+            }
+        }
+        
+        default: return state
+    }
+}
 const color = (state = {data: [], page: 1, totalpage: null}, action) => {
     switch(action.type) {
         case productTypes.SET_COLOR: {
@@ -229,35 +315,7 @@ const size = (state = {data: [], page: 1, totalpage: null}, action) => {
         default: return state
     }
 }
-// const order = (state = { data: [], dataId:[], page: 1, totalpage: null}, action) => {
-//     switch(action.type) {
-//         case productTypes.ORDER_SET_PAGE: {
-//             return {
-//                 ...state,
-//                 page: action.page
-//             }
-//         }
-//         case productTypes.ORDER_SET_TOTAL_PAGE: {
-//             return {
-//                 ...state,
-//                 totalpage: action.totalpage
-//             }
-//         }
-//         case productTypes.ORDER_SET_DATA: {
-//             return {
-//                 ...state,
-//                 data: action.data
-//             }
-//         }
-//         case productTypes.ORDER_SET_DATA_BY_ID: {
-//             return {
-//                 ...state,
-//                 dataId: action.data
-//             }
-//         }
-//         default: return state
-//     }
-// }
+
 const product = (state = {data: [], color:[],size:[] ,page: 1, totalpage: null}, action) => {
     switch(action.type){
         case productTypes.SET_PRODUCT: {
@@ -349,6 +407,8 @@ export default combineReducers({
     product, 
     brand,
     color,
-    size
+    size,
+    promotionCode,
+    banner
 })
 export {stockReducer,updatePriceByCategoryReducer}

@@ -1,114 +1,94 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
-class Size extends Component {
+class Banner extends Component {
   constructor() {
     super();
     this.state = {
-      pagination: [],
-      currname: "",
-      name: "",
+      currContent: "",
+      content: "",
+      category:"category",
+      id_category:"",
+      discount: null,
       id: null,
-      description: "",
       currType: 'add'
     };
   }
-  componentWillMount() {
-    let tmp = [];
-    for (let i = 1; i <= this.props.totalpage; i++) {
-      tmp.push(i);
-    }
-    this.setState({ pagination: tmp });
-  }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.totalpage !== this.props.totalpage) {
-      let tmp = [];
-      for (let i = 1; i <= nextProps.totalpage; i++) {
-        tmp.push(i);
-      }
-      this.setState({ pagination: tmp });
-    }
+   
     if (nextProps.isadd === false) {
-      toast.error("Please change name")
     } else if (nextProps.isadd === true) {
       this.setState({
         name: "",
-        description: "",
         currType: 'add'
       });
     }
     if (nextProps.isupdate === false) {
-     toast.error("Update fail")
+      
     } else if (nextProps.isupdate === true) {
       this.setState({
         id: null,
         name: "",
-        description: "",
         currType: 'add'
       });
     }
   }
-  renderPagination() {
-    if (this.state.pagination.length === 0) {
-      return null;
+  renderMenuCategory = () => {
+    if (this.props.category) {
+      return this.props.category.map((element, index) => {
+        return (
+          <li
+            onClick={() =>
+              this.setState({
+                category: element.name,
+                id_category: element._id
+              })
+            }
+          >
+            {element.name}
+          </li>
+        );
+      });
     } else {
-      return (
-        <nav aria-label="Page navigation">
-            <ul className="pagination pagination-custom col-md-6 offset-md-3">
-            <li className="page-item page-link" onClick={() => this.props.backPage()}>
-            <a>Previous</a>
-            </li>
-            {this.state.pagination.map((element, index) => {
-              if (this.props.page === element) {
-                return (
-                  <li
-                  className="page-item page-link" href="/#"
-                    onClick={() => this.props.setPage(element)}
-                  >
-                    <a>{element}</a>
-                  </li>
-                );
-              } else {
-                return (
-                  <li className="page-item page-link" onClick={() => this.props.setPage(element)}>
-                    <a>{element}</a>
-                  </li>
-                );
-              }
-            })}
-            <li className="page-item page-link" onClick={() => this.props.nextPage()}>
-              <a>Next</a>
-            </li>
-          </ul>
-        </nav>
-        
-      );
+      return null;
     }
-  }
+  };
+  getNameCategoryByID = id => {
+    for (let i = 0; i < this.props.category.length; i++) {
+      if (id === this.props.category[i]._id) return this.props.category[i].name;
+    }
+  };
   add = () => {
     const {
-      name
+      content,
+      discount
     } = this.state;
-    if (name.length <=0) {
-        toast.error("Name invalid");
+    if (content.length <=0) {
+        toast.error("Content invalid");
         return; 
     } 
-    this.props.addSize(this.state.name, this.state.description ,this.state.status)
+    if (discount <=0) {
+        toast.error("Discount invalid");
+        return; 
+    } 
+    this.props.addBanner(this.state.content, this.state.category, 
+      this.state.status, this.state.discount, this.state.id_category)
   };
   update = () => {
     const {
-      name
+      content
     } = this.state;
-    if (name.length <=0) {
-        toast.error("Name invalid");
+    if (content.length <=0) {
+        toast.error("Content invalid");
         return; 
     } 
-    this.props.updateSize(this.state.id, this.state.name, this.state.description, this.state.status)
+    this.props.updateBanner(this.state.id, this.state.content, this.state.category,
+       this.state.status, this.state.discount, this.state.id_category)
   };
   renderBtn = () => {
     if (this.state.currType === "add") {
       return (
-       
+        
           <div className="text-center">
             <button
               onClick={() => this.add()}
@@ -119,7 +99,7 @@ class Size extends Component {
             </button>
             <button
               disabled
-              onClick={() =>this.update()}
+              onClick={() =>this.update() }
               className="btn btn-primary btn-custom__add"
             >
               Update
@@ -131,11 +111,10 @@ class Size extends Component {
               Reset
             </button>
           </div>
-        
+       
       );
     } else {
       return (
-       
           <div className="text-center">
             <button
               disabled
@@ -145,7 +124,7 @@ class Size extends Component {
               Add
             </button>
             <button
-              onClick={() =>this.update()}
+              onClick={() => this.update() }
               data-bs-dismiss="modal"
               className="btn btn-primary btn-custom__add"
             >
@@ -158,15 +137,16 @@ class Size extends Component {
               Reset
             </button>
           </div>
-      
       );
     }
   };
   reset = () => {
       this.setState({
         id: null,
-        name: "",
-        description:"",
+        content: "",
+        discount:null,
+        category:'category',
+        id_category: "",
         currType: 'add'
       })
   }
@@ -182,7 +162,7 @@ class Size extends Component {
               <ol className="breadcrumb">
                 <li className="breadcrumb-item" ><Link to="/">Home</Link></li>
                 <li className="breadcrumb-item">Library</li>
-                <li className="breadcrumb-item active" aria-current="page">Size Manager</li>
+                <li className="breadcrumb-item active" aria-current="page">Banner Manager</li>
               </ol>
             </nav>
           </div>
@@ -190,39 +170,39 @@ class Size extends Component {
         <div className="row">
           <div className="col-lg-12">
             <section className="panel">
-            <button type="button" 
+              <button type="button" 
                   className="btn btn-primary pull-right mr-2 mb-2" 
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal" 
                   >
-                    New size
+                    New Banner
                 </button>
                 <div className="modal fade " id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                       <div className="modal-content">
                         <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">Size</h5>
+                          <h5 className="modal-title" id="exampleModalLabel">Banner</h5>
                           <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
                         </div>
                         <div className="modal-body">
                           <div className="row">
                             <div className="col-lg-12">
                               <section className="panel">
-                              
+                                
                                   <div className="form">
                                     <div className="form-validate form-horizontal">
                                       <div className="form-group ">
                                         <label for="cname" className="control-label col-lg-2">
-                                          Name <span className="required">*</span>
+                                          Content <span className="required">*</span>
                                         </label>
                                         <div className="col-lg-12">
                                           <input
                                             onChange={e => {
                                               this.setState({
-                                                name: e.target.value
+                                                content: e.target.value
                                               });
                                             }}
-                                            value={this.state.name}
+                                            value={this.state.content}
                                             className="form-control"
                                             id="cname"
                                             name="fullname"
@@ -233,33 +213,51 @@ class Size extends Component {
                                         </div>
                                       </div>
                                       <div className="form-group ">
-                                        <label for="cname" className="control-label col-lg-2">
-                                          Description 
+                                        <label for="discount" className="control-label col-lg-2">
+                                          Discount <span className="required">*</span>
                                         </label>
                                         <div className="col-lg-12">
                                           <input
                                             onChange={e => {
                                               this.setState({
-                                                description: e.target.value
+                                                discount: e.target.value
                                               });
                                             }}
-                                            value={this.state.description}
+                                            value={this.state.discount}
                                             className="form-control"
-                                            id="cname"
-                                            name="fullname"
-                                            minlength="5"
-                                            type="text"
+                                            id="discount"
+                                            type="number"
                                             required
                                           />
                                         </div>
                                       </div>
+                                      <div className="form-group col-lg-12">
+                                          <label  className="control-label col-lg-2">
+                                            Category
+                                          </label>
+                                          <div className="dropdown btn-group form-control ">
+                                            <span  
+                                              type="button"
+                                              className="btn btn-default  dropdown-toggle  "
+                                              data-bs-toggle="dropdown"
+                                              id="dropdownMenuButton1"
+                                              // aria-haspopup="true" 
+                                              aria-expanded="false"
+                                            >
+                                              {this.state.category} 
+                                            </span>
+                                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                              {this.renderMenuCategory()}
+                                            </ul>
+                                          </div>
+                                        </div>
                                       <div className="form-group d-flex">
                                       <label for="comment" className="control-label col-lg-2">
                                           Status
                                         </label>
                                         <div className="col-lg-12 d-flex" >
                                           
-                                            <div className="form-check ">
+                                            <div class="form-check">
                                               <input
                                                 checked={this.state.status}
                                                 onClick={() => this.setState({ status: true })}
@@ -269,7 +267,7 @@ class Size extends Component {
                                               />
                                               <label className="form-check-label" for="flexRadioDefault1">True</label>
                                             </div>
-                                            <div className="form-check ml-2">
+                                            <div class="form-check ml-2">
                                               <input
                                                 checked={!this.state.status}
                                                 onClick={() => this.setState({ status: false })}
@@ -279,12 +277,13 @@ class Size extends Component {
                                               />
                                               <label className="form-check-label" for="flexRadioDefault1">False</label>
                                             </div>
-                                         
+                                        
                                         </div>
                                       </div>
                                       {this.renderBtn()}
                                     </div>
                                   </div>
+                              
                               </section>
                             </div>
                           </div>
@@ -295,14 +294,15 @@ class Size extends Component {
                       </div>
                     </div>
                   </div>
+
               <table className="table table-striped table-advance table-hover">
                 <tbody>
                   <tr>
                     <th>
-                      <i className="icon_profile" /> Name
+                      <i className="fas fa-bars" /> Content
                     </th>
                     <th>
-                      <i className="fas fa-pen-alt" /> Description
+                      <i className="fas fa-chart-line" /> Discount
                     </th>
                     <th>
                       <i className="icon_check_alt2" /> Status
@@ -311,22 +311,26 @@ class Size extends Component {
                       <i className="icon_cogs" /> Action
                     </th>
                   </tr>
-                  {this.props.size.map((element, index) => {
+                  {this.props.banner.map((element, index) => {
                     return (
                       <tr>
-                        <td>{element.name}</td>
-                        <td>{element.description}</td>
+                        <td>{element.content}</td>
+                        <td>{element.disCount}%</td>
                         <td>{element.status.toString()}</td>
                         <td>
                           <div className="btn-group" data-bs-toggle="modal" data-bs-target="#exampleModal" >
                             <span
                               onClick={() =>
                                 this.setState({
-                                  currname: element.name,
-                                  name: element.name,
+                                  currContent: element.content,
+                                  content: element.content,
                                   id: element._id,
-                                  description:element.description,
+                                  discount:element.disCount,
                                   status:element.status,
+                                  category: this.getNameCategoryByID(
+                                    element.id_category
+                                  ),
+                                  id_category: element.id_category,
                                   currType: "update"
                                 })
                               }
@@ -341,13 +345,12 @@ class Size extends Component {
                   })}
                 </tbody>
               </table>
-              {this.renderPagination()}
             </section>
           </div>
         </div>
-       
+        
       </section>
     );
   }
 }
-export default Size;
+export default Banner;
