@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import Slider from '../../containers/slider.container';
-import NavbarContainer from '../../containers/navbar.container';
+//import Slider from '../../containers/slider.container';
+//import NavbarContainer from '../../containers/navbar.container';
 import { useDispatch, useSelector } from 'react-redux';
 import { viewHistoryGet } from '../../actions/order.action';
 //import Orders from '../OrderContainer/order.container';
@@ -16,7 +16,7 @@ const Bill = (props) => {
     useEffect(() => {
         dispatch(viewHistoryGet(props.match.params.id));
       }
-    , [dispatch])
+    , [dispatch, props.match.params.id])
     let min = 1;
     let max = 999999;
     let rand =   Math.floor(min + (Math.random() * (max-min)));
@@ -65,7 +65,7 @@ const Bill = (props) => {
                                                         <tbody>
                                                             <tr>
                                                                 <td className="title">
-                                                                    <img src="/img/logo.png" style={{width: '100%', maxWidth: 200}} />
+                                                                    <img src="/img/logo.png" style={{width: '100%', maxWidth: 200}} alt=""/>
                                                                 </td>
                                                                 <td>
                                                                     Invoice :{rand}<br />

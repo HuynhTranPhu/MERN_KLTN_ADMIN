@@ -45,16 +45,16 @@ const Orders = (props) => {
     dispatch(viewHistoryGet(props.match.params.id));
     //dispatch(viewHistoryGet(id_order));
   }
-, [dispatch])
+, [dispatch, props.match.params.id])
 
   return (
     <section id="container" className="">
     <NavbarContainer /> 
     <Slider />
-    {viewHistory.map((orderItem, index) => (
+    {/* {viewHistory.map((orderItem, index) => ( */}
         <Card 
-          key={index}
-          headerLeft={"OrderId:"+" "+orderItem._id}
+          key={viewHistory._id}
+          headerLeft={"OrderId:"+" "+viewHistory._id}
         >
           <div 
             style={{
@@ -67,32 +67,36 @@ const Orders = (props) => {
           >
             <div>
               <div className="title">Items</div>
-              {orderItem.cart.map((item, index) => (
-                <div className="value" key={index}>
-                  {item.name}
-                </div>
+              {viewHistory?.cart?.map((item, index) => (
+                <>
+                  <div className="value" key={index}>
+                    {item.name}<span className="title">({item.color.name},{item.size.name})</span> 
+                  </div>
+                  
+                </>
+                
               ))}
             </div>
             <div>
               <span className="title">Total Price</span>
               <br />
-              <span className="value">{orderItem.order_subtotal}</span>
+              <span className="value">${viewHistory.order_subtotal}</span>
             </div>
             <div>
               <span className="title">Payment Type</span> <br />
-              <span className="value">{orderItem.payment}</span>
+              <span className="value">{viewHistory.payment}</span>
             </div>
             <div>
               <span className="title">Phone</span> <br />
-              <span className="value">{orderItem.phone}</span>
+              <span className="value">{viewHistory.phone}</span>
             </div>
             <div>
               <span className="title">Address</span> <br />
-              <span className="value">{orderItem.address}</span>
+              <span className="value">{viewHistory.address}</span>
             </div>
             <div>
               <span className="title">Payment Status</span> <br />
-              <span className="value">{orderItem.paymentStatus}</span>
+              <span className="value">{viewHistory.paymentStatus}</span>
             </div>
           </div>
           <div
@@ -105,7 +109,7 @@ const Orders = (props) => {
             }}
           >
             <div className="orderTrack">
-              {orderItem.orderStatus.map((status) => (
+              {viewHistory?.orderStatus?.map((status) => (
                 <div
                   className={`orderStatus ${
                     status.isCompleted ? "active" : ""
@@ -130,9 +134,9 @@ const Orders = (props) => {
                 boxSizing: "border-box",
               }}
             >
-              <select onChange={(e) => setType(e.target.value)}>
+              <select className="form-select" onChange={(e) => setType(e.target.value)}>
                 <option value={""}>select status</option>
-                {orderItem.orderStatus.map((status) => {
+                {viewHistory?.orderStatus?.map((status) => {
                   return (
                     <>
                       {!status.isCompleted ? (
@@ -148,18 +152,18 @@ const Orders = (props) => {
             {/* button to confirm action */}
 
             <div>
-              <button className="confirm" onClick={() => onOrderUpdate(orderItem._id)}>
+              <button className="btn btn-primary" onClick={() => onOrderUpdate(viewHistory._id)}>
                 confirm
               </button>
             </div>
             <div>
-              <button className="cancel" onClick={() => removeOrderHandler(orderItem._id)}>
+              <button className="btn btn-primary cancel" onClick={() => removeOrderHandler(viewHistory._id)}>
                 Cancel 
               </button>
             </div>
           </div>
         </Card>
-      ))}
+      {/* ))} */}
     
     </section>
     

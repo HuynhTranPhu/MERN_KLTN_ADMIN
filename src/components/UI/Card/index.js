@@ -14,7 +14,7 @@ const Card = (props) => {
           <ol className="breadcrumb cardHeader__breadcrumb">
             <li className="breadcrumb-item"><Link to="/">Home</Link></li>
             <li className="breadcrumb-item">Library</li>
-            <li className="breadcrumb-item" aria-current="page">Order manager</li>
+            <li className="breadcrumb-item" aria-current="page"><Link to="/order">Order manager</Link></li>
             <li className="breadcrumb-item active" aria-current="page">Order details</li>
           </ol>
       </nav>

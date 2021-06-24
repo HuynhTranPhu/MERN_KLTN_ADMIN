@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getCustomerOrders, viewHistoryGet } from '../../actions/order.action';
+import { getCustomerOrders } from '../../actions/order.action';
 import Slider from '../../containers/slider.container';
 import NavbarContainer from '../../containers/navbar.container';
 
@@ -22,7 +22,7 @@ const History = (props) => {
             <ol className="breadcrumb  ">
                 <li className="breadcrumb-item"><Link to="/">Home</Link></li>
                 <li className="breadcrumb-item">Library</li>
-                <li className="breadcrumb-item active" aria-current="page">Order manager</li>
+                <li className="breadcrumb-item active" aria-current="page"><Link to="/order">Order manager</Link></li>
             </ol>
             </nav>
         </div>

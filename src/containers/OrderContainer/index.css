@@ -27,12 +27,12 @@
     background-color: #26A541;
 }
 .orderInfo{
-    height: 60px;
+    height: 80px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: absolute;
-    top: -26px;
+    top: -35px;
     transform: translateX(-50%);
 }
 
@@ -44,11 +44,8 @@
     font-size: 14px;
     text-transform: capitalize;
 }
-.confirm{
-    background-color: #106894;
-}
+
 .cancel{
-    background-color: #106894;
     margin-left: 15px;
 }
 .status{
