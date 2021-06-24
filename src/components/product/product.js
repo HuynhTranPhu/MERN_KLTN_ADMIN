@@ -9,7 +9,8 @@ class Product extends Component {
     this.state = {
       pagination: [],
       product: null,
-      files: null,
+      files: [],
+      //files: null,
       imagePreviewUrl: null,
       curr: "add",
       category: "category",
@@ -19,7 +20,7 @@ class Product extends Component {
       size:null,
       quantity:"",
       price: "",
-      img: "",
+      img: '',
       description: "",
       id_brand: "",
       id_category: "",
@@ -91,18 +92,24 @@ class Product extends Component {
       );
     }
   }
-  handleChangeImg = img => {
-    if(img === undefined)
-      return
-    let reader = new FileReader();
-    reader.onloadend = () => {
-      this.setState({
-        files: img,
-        img: reader.result
-      });
-    };
-    reader.readAsDataURL(img);
+  handleChangeImg = e => {
+    
+    this.setState({ files: e.target.files })
   };
+  // handleChangeImg = img => {
+  //   if(img === undefined)
+  //     return
+  //   let reader = new FileReader();
+  //   console.log(img)
+  //   reader.onloadend = () => {
+  //     this.setState({
+  //       files: img,
+  //       img: reader.result
+  //     });
+  //   };
+  //   reader.readAsDataURL(img);
+    
+  // };
   
  
   handleAddSize = (e) => {
@@ -175,16 +182,15 @@ class Product extends Component {
       id_brand,
       files
     } = this.state;
-
     if (name.length <= 0) {
         toast.error("Name invalid");
         return; 
     } 
-    if (color=='') {
+    if (color ==='') {
       toast.error("Color invalid"); 
       return; 
     }
-    if (size== '') {
+    if (size === '') {
       toast.error("Size invalid"); 
       return; 
     }
@@ -255,7 +261,7 @@ class Product extends Component {
       toast.error("Brand invalid");
       return;
     }
-    if (files === null && img === '' ) {
+    if (files.length < 0 && img === '' ) {
       toast.error("File invalid");
       return;
     }
@@ -461,7 +467,7 @@ class Product extends Component {
                                             }
                                             className="form-control "
                                             id="curl"
-                                            type="text"
+                                            type="number"
                                             name="url"
                                           />
                                         </div>
@@ -514,20 +520,6 @@ class Product extends Component {
                                           </div>
                                         </div>
                                         
-                                        {/* <div className="col-lg-12 d-flex flex-wrap">
-                                          <select className="form-select" onChange={this.handleSelectColor}>
-                                            <option value="">Select color</option>
-                                              {
-                                                  this.props.color.map(element => (
-                                                      <option value={element.name} key={element._id}>
-                                                          {element.name}
-                                                      </option>
-                                                  ))
-                                              }
-                                          </select>
-                                         
-                                        </div> */}
-                                        
                                       </div>
                                       <div className="form-group ">
                                         <label for="curl" className="control-label col-lg-2">
@@ -543,7 +535,7 @@ class Product extends Component {
                                             }
                                             className="form-control "
                                             id="curl"
-                                            type="text"
+                                            type="number"
                                             name="url"
                                           />
                                         </div>
@@ -608,20 +600,7 @@ class Product extends Component {
                                               {this.renderMenuBrand()}
                                             </ul>
                                           </div>
-                                          {/* <select className="form-select form-control col-lg-12" >
-                                                <option
-                                                    value=""
-                                                    disabled
-                                                    selected 
-                                                    style={{ display: "none"  }}
-                                                >
-                                                    {this.state.brand}
-                                                </option>
-                                                
-                                                  {
-                                                    this.renderMenuBrand()
-                                                  }
-                                            </select> */}
+                                          
                                         </div>
                                       </div>
                                       
@@ -635,10 +614,10 @@ class Product extends Component {
                                             type="file"
                                             id="ccomment"
                                             name="comment"
+                                            multiple
                                             required
-                                            onChange={e =>
-                                              this.handleChangeImg(e.target.files[0])
-                                            }
+                                            //onChange={e=>this.handleChangeImg(e.target.files[0])}
+                                            onChange={this.handleChangeImg}
                                           />
                                         </div>
                                       </div>
@@ -650,6 +629,7 @@ class Product extends Component {
                                           <img
                                             src={this.state.img}
                                             style={{ maxWidth: "100px" }}
+                                            alt=""
                                           />
                                         </div>
                                       </div>

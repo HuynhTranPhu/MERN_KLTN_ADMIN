@@ -7,7 +7,7 @@ class PromotionCode extends Component {
     this.state = {
       currcode: "",
       content:"",
-      price_discount:null,
+      price_discount:0,
       code: "",
       id: null,
       currType: 'add'
@@ -139,7 +139,7 @@ class PromotionCode extends Component {
       this.setState({
         id: null,
         content:"",
-        price_discount:null,
+        price_discount:0,
         code: "",
         currType: 'add'
       })

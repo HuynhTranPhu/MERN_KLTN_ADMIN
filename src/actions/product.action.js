@@ -69,9 +69,12 @@ export const deleteProduct = (id) => async(dispatch, getState) => {
     //console.log(res)
     dispatch(getProduct())
 }
-export const addProduct = (id_category, name,color,size,quantity, price, description, id_brand, files) => async (dispatch, getState) => {
+export const addProduct = (id_category, name, color, size, quantity, price, description, id_brand, files) => async (dispatch, getState) => {
     let data = new FormData()
-    data.append('files', files)
+    for(let i=0; i<files.length; i++){
+        data.append('files', files[i]);
+    }
+    //data.append('files', files)
     data.append('id_category', id_category) 
     data.append('name', name) 
     data.append('colorProduct',JSON.stringify(color)) 
@@ -95,7 +98,10 @@ export const addProduct = (id_category, name,color,size,quantity, price, descrip
 }
 export const updateProduct = (id, name, color, size, quantity, id_category, price, description, id_brand, files, status) => async (dispatch, getState) => {
     let data = new FormData()
-    data.append('files', files)
+    for(let i=0; i<files.length; i++){
+        data.append('files', files[i]);
+    }
+    //data.append('files', files)
     data.append('id', id)
     data.append('id_category', id_category) 
     data.append('name', name) 
