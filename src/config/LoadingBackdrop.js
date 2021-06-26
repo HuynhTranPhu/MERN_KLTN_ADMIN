@@ -1,0 +1,31 @@
+import { Backdrop, CircularProgress, Fade, makeStyles, Modal } from '@material-ui/core';
+import React from 'react';
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    color: theme.palette.common.white,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+}));
+
+const LoadingBackdrop = (props) => {
+  const classes = useStyles();
+
+  return (
+    <Modal
+      open={props.open}
+      className={classes.modal}
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 250
+      }}>
+      <Fade in={props.open}>
+        <CircularProgress color="inherit" />
+      </Fade>
+    </Modal>
+  );
+};
+
+export default LoadingBackdrop;

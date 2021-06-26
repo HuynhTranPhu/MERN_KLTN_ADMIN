@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { getCustomerOrders } from '../../actions/order.action';
 import Slider from '../../containers/slider.container';
 import NavbarContainer from '../../containers/navbar.container';
+import LoadingBackdrop from "../../config/LoadingBackdrop";
 
 const History = (props) => {
     const order = useSelector((state) => state.order);
@@ -111,6 +112,7 @@ const History = (props) => {
 
 
         </div>
+        <LoadingBackdrop open={order.loading}/>
             
         </section>
     );

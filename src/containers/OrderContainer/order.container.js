@@ -4,6 +4,7 @@ import { removeOrder, updateOrder, viewHistoryGet } from "../../actions/order.ac
 import Card from "../../components/UI/Card/index";
 import NavbarContainer from "../navbar.container";
 import Slider from "../slider.container";
+import LoadingBackdrop from "../../config/LoadingBackdrop";
 
 import "./index.css";
 
@@ -15,7 +16,7 @@ import "./index.css";
 const Orders = (props) => {
   //const order = useSelector((state) => state.order);
   const viewHistoryOder = useSelector((state) => state.viewHistoryOder);
-  const {viewHistory} = viewHistoryOder;
+  const {viewHistory,loading} = viewHistoryOder;
   const [type, setType] = useState("");
   const dispatch = useDispatch();
   //console.log(viewHistory);
@@ -164,7 +165,7 @@ const Orders = (props) => {
           </div>
         </Card>
       {/* ))} */}
-    
+            <LoadingBackdrop open={loading}/>
     </section>
     
      
