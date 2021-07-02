@@ -1,0 +1,17 @@
+.select__option{
+    display: flex;
+}
+.select__option h6{
+    font-weight: bold;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+.select__option select{
+    width: 200px;
+    min-width: 130px;
+    height: 35px;
+    margin-top: 8px;
+}
+.select__option .select__cate{
+    margin-left: 20px;
+}

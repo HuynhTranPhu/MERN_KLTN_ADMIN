@@ -1,4 +1,4 @@
-import { CATEGORY_LIST_FAIL, CATEGORY_LIST_REQUEST, CATEGORY_LIST_SUCCESS, GET_ORDER_BY_CATEGORY_YEAR_FAIL, GET_ORDER_BY_CATEGORY_YEAR_REQUEST, GET_ORDER_BY_CATEGORY_YEAR_SUCCESS, GET_ORDER_BY_YEAR_FAIL, GET_ORDER_BY_YEAR_REQUEST, GET_ORDER_BY_YEAR_SUCCESS, GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_FAIL, GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_REQUEST, GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_SUCCESS, GET_QUANTITY_ORDER_BY_YEAR_FAIL, GET_QUANTITY_ORDER_BY_YEAR_REQUEST, GET_QUANTITY_ORDER_BY_YEAR_SUCCESS } from "../constants/action.types";
+import { CATEGORY_LIST_FAIL, CATEGORY_LIST_REQUEST, CATEGORY_LIST_SUCCESS, GET_ORDER_BY_CATEGORY_YEAR_FAIL, GET_ORDER_BY_CATEGORY_YEAR_REQUEST, GET_ORDER_BY_CATEGORY_YEAR_SUCCESS, GET_ORDER_BY_YEAR_FAIL, GET_ORDER_BY_YEAR_REQUEST, GET_ORDER_BY_YEAR_SUCCESS, GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_FAIL, GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_REQUEST, GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_SUCCESS, GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_FAIL, GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_REQUEST, GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_SUCCESS, GET_QUANTITY_ORDER_BY_YEAR_FAIL, GET_QUANTITY_ORDER_BY_YEAR_REQUEST, GET_QUANTITY_ORDER_BY_YEAR_SUCCESS, GET_SUB_TOTAL_BY_YEAR_FAIL, GET_SUB_TOTAL_BY_YEAR_REQUEST, GET_SUB_TOTAL_BY_YEAR_SUCCESS } from "../constants/action.types";
 
 
 
@@ -9,6 +9,17 @@ function getOrderByYearReducer(state={ arrOrder:[]}, action){
         case GET_ORDER_BY_YEAR_SUCCESS:
             return {loading : false, arrOrder : action.payload};
         case GET_ORDER_BY_YEAR_FAIL:
+            return {loading : false, error : action.payload};
+        default : return state;
+    }
+  }
+function getOrderSubTotalByYearReducer(state={ arrOrderSubTotal:[]}, action){
+    switch(action.type){
+        case GET_SUB_TOTAL_BY_YEAR_REQUEST:
+            return {loading : true};
+        case GET_SUB_TOTAL_BY_YEAR_SUCCESS:
+            return {loading : false, arrOrderSubTotal : action.payload};
+        case GET_SUB_TOTAL_BY_YEAR_FAIL:
             return {loading : false, error : action.payload};
         default : return state;
     }
@@ -46,6 +57,17 @@ function getOrderByCategoryYearReducer(state={ arrCategoryOrder:[]}, action){
         default : return state;
     }
   }
+function getOrderSubTotalByCategoryYearReducer(state={ arrCategoryOrderSubTotal:[]}, action){
+    switch(action.type){
+        case GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_REQUEST:
+            return {loading : true};
+        case GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_SUCCESS:
+            return {loading : false, arrCategoryOrderSubTotal : action.payload};
+        case GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_FAIL:
+            return {loading : false, error : action.payload};
+        default : return state;
+    }
+  }
 function categoryListReducer(state={category:[]},action){
     switch(action.type){
         case CATEGORY_LIST_REQUEST:
@@ -63,5 +85,7 @@ export {getOrderByYearReducer,
      getQuantityOrderByYearReducer, 
      getQuantityOrderByCategoryYearReducer,
      getOrderByCategoryYearReducer,
-     categoryListReducer
+     categoryListReducer,
+     getOrderSubTotalByYearReducer,
+     getOrderSubTotalByCategoryYearReducer
 }

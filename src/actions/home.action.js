@@ -2,12 +2,18 @@ import axios from "axios";
 import { CATEGORY_LIST_FAIL, CATEGORY_LIST_REQUEST, CATEGORY_LIST_SUCCESS, GET_ORDER_BY_CATEGORY_YEAR_FAIL, GET_ORDER_BY_CATEGORY_YEAR_REQUEST, GET_ORDER_BY_CATEGORY_YEAR_SUCCESS, GET_ORDER_BY_YEAR_FAIL, 
     GET_ORDER_BY_YEAR_REQUEST, 
     GET_ORDER_BY_YEAR_SUCCESS, 
+    GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_FAIL, 
+    GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_REQUEST, 
+    GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_SUCCESS, 
     GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_FAIL, 
     GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_REQUEST, 
     GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_SUCCESS, 
     GET_QUANTITY_ORDER_BY_YEAR_FAIL, 
     GET_QUANTITY_ORDER_BY_YEAR_REQUEST, 
-    GET_QUANTITY_ORDER_BY_YEAR_SUCCESS} from "../constants/action.types";
+    GET_QUANTITY_ORDER_BY_YEAR_SUCCESS,
+    GET_SUB_TOTAL_BY_YEAR_FAIL,
+    GET_SUB_TOTAL_BY_YEAR_REQUEST,
+    GET_SUB_TOTAL_BY_YEAR_SUCCESS} from "../constants/action.types";
 
 
 require ('dotenv').config();
@@ -47,6 +53,23 @@ export const getQuantityOfOrderByYear = (year) => async (dispatch)=> {
       });
     }
 };
+export const getOrderSubTotalByYear = (year) => async (dispatch)=> {
+   
+    try {
+      dispatch({ type: GET_SUB_TOTAL_BY_YEAR_REQUEST });
+      const {data} = await axios.get(`${url}/admin/order/subtotal/${year}`);
+        dispatch({
+          type: GET_SUB_TOTAL_BY_YEAR_SUCCESS,
+          payload: data.arrOr
+        });
+       
+    } catch (error) {
+      dispatch({
+        type: GET_SUB_TOTAL_BY_YEAR_FAIL,
+        payload: error.message
+      });
+    }
+};
 export const getOrderOfOrderByCategoryYear = (year, categoryName) => async (dispatch)=> {
    
     try {
@@ -77,6 +100,23 @@ export const getQuantityOfOrderByCategoryYear = (year, categoryName) => async (d
     } catch (error) {
       dispatch({
         type: GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_FAIL,
+        payload: error.message
+      });
+    }
+};
+export const getOrderSubTotalByCategoryYear = (year, categoryName) => async (dispatch)=> {
+   
+    try {
+      dispatch({ type: GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_REQUEST });
+      const {data} = await axios.post(`${url}/admin/order/subtotalcategory`,{year, categoryName});
+        dispatch({
+          type: GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_SUCCESS,
+          payload: data.arrOr
+        });
+       
+    } catch (error) {
+      dispatch({
+        type: GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_FAIL,
         payload: error.message
       });
     }

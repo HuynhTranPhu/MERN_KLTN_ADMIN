@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCustomerOrders } from "../../actions/order.action";
 import { listProducts } from "../../actions/product.action";
 import Char from "../Chart";
+import ChartTotal from "../chart-Total";
 // class Home extends Component {
 //   constructor() {
 //     super();
@@ -96,18 +97,35 @@ const Home = (props) => {
                     <h2>
                       <i className="fa fa-flag-o red" />
                       <strong>
-                       Statistical manuals
+                       Statistical orders and Quantity manuals
                       </strong>
                     </h2>
                   </div>
                  
                 </div>
               </div>
-
-             
             </div>
-
+           
+           
            <Char/>
+           <br />
+            <br />
+            <div className="row">
+              <div className="col-lg-12 col-md-12">
+                <div className="panel panel-default">
+                  <div className="panel-heading">
+                    <h2>
+                      <i className="fa fa-flag-o red" />
+                      <strong>
+                       Statistical total revenue manuals
+                      </strong>
+                    </h2>
+                  </div>
+                 
+                </div>
+              </div>
+            </div>
+           <ChartTotal/>
             <br />
             <br />
 
