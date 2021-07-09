@@ -56,28 +56,29 @@ class Size extends Component {
         <nav aria-label="Page navigation">
             <ul className="pagination pagination-custom col-md-6 offset-md-3">
             <li className="page-item page-link" onClick={() => this.props.backPage()}>
-            <a>Previous</a>
+            <span>Previous</span>
             </li>
             {this.state.pagination.map((element, index) => {
               if (this.props.page === element) {
                 return (
                   <li
-                  className="page-item page-link" href="/#"
+                    className={this.props.page===element?'active page-item page-link':'page-item page-link'}
                     onClick={() => this.props.setPage(element)}
                   >
-                    <a>{element}</a>
+                    <span>{element}</span>
                   </li>
                 );
               } else {
                 return (
-                  <li className="page-item page-link" onClick={() => this.props.setPage(element)}>
-                    <a>{element}</a>
+                  <li className={this.props.page===element?'active page-item page-link':'page-item page-link'} 
+                    onClick={() => this.props.setPage(element)}>
+                    <span>{element}</span>
                   </li>
                 );
               }
             })}
             <li className="page-item page-link" onClick={() => this.props.nextPage()}>
-              <a>Next</a>
+              <span>Next</span>
             </li>
           </ul>
         </nav>

@@ -11,7 +11,12 @@
 	
 	.pagination-custom{
 		margin-top: 20px;
-		margin-left: 600px;
+		margin-left: 500px;
+		cursor: pointer;
+	}
+	.pagination-custom .active{
+		background-color: #394a59;
+		color: #fff;
 	}
 .fc table {
 	border-collapse: collapse;

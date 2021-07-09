@@ -10,7 +10,6 @@ class Product extends Component {
       pagination: [],
       product: null,
       files: [],
-      //files: null,
       imagePreviewUrl: null,
       curr: "add",
       category: "category",
@@ -63,28 +62,29 @@ class Product extends Component {
         <nav aria-label="Page navigation">
             <ul className="pagination pagination-custom col-md-6 offset-md-3">
             <li className="page-item page-link" onClick={() => this.props.backPage()}>
-              <a>Previous</a>
+              <span>Previous</span>
             </li>
             {this.state.pagination.map((element, index) => {
               if (this.props.page === element) {
                 return (
                   <li
-                    className="page-item page-link"
+                    className={this.props.page===element?'active page-item page-link':'page-item page-link'}
                     onClick={() => this.props.setPage(element)}
                   >
-                    <a>{element}</a>
+                    <span>{element}</span>
                   </li>
                 );
               } else {
                 return (
-                  <li className="page-item page-link" onClick={() => this.props.setPage(element)}>
-                    <a>{element}</a>
+                  <li className={this.props.page===element?'active page-item page-link':'page-item page-link'}
+                   onClick={() => this.props.setPage(element)}>
+                    <span >{element}</span>
                   </li>
                 );
               }
             })}
             <li className="page-item page-link" onClick={() => this.props.nextPage()}>
-              <a>Next</a>
+              <span>Next</span>
             </li>
           </ul>
         </nav>
@@ -96,20 +96,6 @@ class Product extends Component {
     
     this.setState({ files: e.target.files })
   };
-  // handleChangeImg = img => {
-  //   if(img === undefined)
-  //     return
-  //   let reader = new FileReader();
-  //   console.log(img)
-  //   reader.onloadend = () => {
-  //     this.setState({
-  //       files: img,
-  //       img: reader.result
-  //     });
-  //   };
-  //   reader.readAsDataURL(img);
-    
-  // };
   
  
   handleAddSize = (e) => {
@@ -322,7 +308,7 @@ class Product extends Component {
   reset = () => {
     this.setState({
         //name: "",
-        files: null,
+        files: [],
         imagePreviewUrl: null,
         curr: "add",
         category: "category",
@@ -341,7 +327,7 @@ class Product extends Component {
   }
   renderMenuCategory = () => {
     if (this.props.category) {
-      return this.props.category.map((element, index) => {
+      return this.props.category?.map((element, index) => {
         return (
           <li
             onClick={() =>
@@ -361,7 +347,7 @@ class Product extends Component {
   };
   renderMenuBrand = () => {
     if (this.props.brand) {
-      return this.props.brand.map((element, index) => {
+      return this.props.brand?.map((element, index) => {
         return (
           <option
             onClick={() =>
@@ -477,7 +463,7 @@ class Product extends Component {
                                         Color
                                         </label>
                                         <div className="col-lg-12 d-flex flex-wrap">
-                                          {this.props.color.map((element,index) => {
+                                          {this.props.color?.map((element,index) => {
                                             return ( 
                                               <div className="form-check ml-2" >
                                                 <input 
@@ -500,7 +486,7 @@ class Product extends Component {
                                             Size
                                             </label>
                                             <div className="col-lg-12 d-flex flex-wrap">
-                                              {this.props.size.map((element) => {
+                                              {this.props.size?.map((element) => {
                                                 return ( 
                                                   <div className="form-check ml-2" >
                                                     <input 
@@ -616,7 +602,6 @@ class Product extends Component {
                                             name="comment"
                                             multiple
                                             required
-                                            //onChange={e=>this.handleChangeImg(e.target.files[0])}
                                             onChange={this.handleChangeImg}
                                           />
                                         </div>
@@ -709,7 +694,7 @@ class Product extends Component {
                       <i className="icon_cogs" /> Action
                     </th>
                   </tr>
-                  {this.props.product.map((element, index) => {
+                  {this.props.product?.map((element, index) => {
                     return (
                       <tr>
                         <td>
@@ -719,12 +704,12 @@ class Product extends Component {
                         </td>
                         <td style={{ width: "20%" }}>{element.name}</td>
                         <td>{element.price}</td>
-                        <td>{element.colorProducts.colorProduct.map(item => (
+                        <td>{element.colorProducts?.colorProduct?.map(item => (
                             <p key={item?._id?._id}>
                                 {item?._id?.name}
                             </p> ))}
                         </td>
-                        <td>{element.sizeProducts.sizeProduct.map(item => (
+                        <td>{element.sizeProducts?.sizeProduct?.map(item => (
                             <p key={item?._id?._id}>
                                 {item?._id?.name}
                             </p> ))}
