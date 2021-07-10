@@ -44,7 +44,8 @@
 .invoice-box table tr.heading td {
     background: #eee;
     border-bottom: 1px solid #ddd;
-    font-weight: bold;
+    padding-bottom: 20px;
+    /* font-weight: bold; */
 }
 
 .invoice-box table tr.details td {
@@ -62,6 +63,11 @@
 .invoice-box table tr.total td:nth-child(2) {
     border-top: 2px solid #eee;
     font-weight: bold;
+    font-size: 20px;
+}
+.print__pdf{
+    margin-right: 20px;
+    margin-top: 10px;
 }
 
 @media only screen and (max-width: 600px) {

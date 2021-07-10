@@ -14,12 +14,12 @@ import "./index.css";
  **/
 
 const Orders = (props) => {
-  //const order = useSelector((state) => state.order);
+  
   const viewHistoryOder = useSelector((state) => state.viewHistoryOder);
   const {viewHistory,loading} = viewHistoryOder;
   const [type, setType] = useState("");
   const dispatch = useDispatch();
-  //console.log(viewHistory);
+  const promotionPrice = viewHistory?.cart?.map(i=> i.price * i.quantity);
 
   const onOrderUpdate = (id_order) => {
     const payload = {
@@ -52,10 +52,9 @@ const Orders = (props) => {
     <section id="container" className="">
     <NavbarContainer /> 
     <Slider />
-    {/* {viewHistory.map((orderItem, index) => ( */}
         <Card 
-          key={viewHistory._id}
-          headerLeft={"OrderId:"+" "+viewHistory._id}
+          key={viewHistory?._id}
+          headerLeft={"OrderId: "+viewHistory?._id}
         >
           <div 
             style={{
@@ -81,23 +80,28 @@ const Orders = (props) => {
             <div>
               <span className="title">Total Price</span>
               <br />
-              <span className="value">${viewHistory.order_subtotal}</span>
+              <span className="value">${viewHistory?.order_subtotal}</span>
+            </div>
+            <div>
+              <span className="title">Promotion Price</span>
+              <br />
+              <span className="value">${promotionPrice > viewHistory?.order_subtotal ? promotionPrice - viewHistory?.order_subtotal: 0 }</span>
             </div>
             <div>
               <span className="title">Payment Type</span> <br />
-              <span className="value">{viewHistory.payment}</span>
+              <span className="value">{viewHistory?.payment}</span>
             </div>
             <div>
               <span className="title">Phone</span> <br />
-              <span className="value">{viewHistory.phone}</span>
+              <span className="value">{viewHistory?.phone}</span>
             </div>
             <div>
               <span className="title">Address</span> <br />
-              <span className="value">{viewHistory.address}</span>
+              <span className="value">{viewHistory?.address}</span>
             </div>
             <div>
               <span className="title">Payment Status</span> <br />
-              <span className="value">{viewHistory.paymentStatus}</span>
+              <span className="value">{viewHistory?.paymentStatus}</span>
             </div>
           </div>
           <div
@@ -153,19 +157,19 @@ const Orders = (props) => {
             {/* button to confirm action */}
 
             <div>
-              <button className="btn btn-primary" onClick={() => onOrderUpdate(viewHistory._id)}>
+              <button className="btn btn-primary" onClick={() => onOrderUpdate(viewHistory?._id)}>
                 confirm
               </button>
             </div>
             <div>
-              <button className="btn btn-primary cancel" onClick={() => removeOrderHandler(viewHistory._id)}>
+              <button className="btn btn-primary cancel" onClick={() => removeOrderHandler(viewHistory?._id)}>
                 Cancel 
               </button>
             </div>
           </div>
         </Card>
-      {/* ))} */}
-            <LoadingBackdrop open={loading}/>
+     
+        <LoadingBackdrop open={loading}/>
     </section>
     
      

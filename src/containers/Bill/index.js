@@ -11,7 +11,8 @@ const Bill = (props) => {
 
     const viewHistoryOder = useSelector((state) => state.viewHistoryOder);
     const {viewHistory} = viewHistoryOder;
-    console.log(viewHistory);
+    //console.log(viewHistory);
+    const promotionPrice = viewHistory?.cart?.map(i=> i.price * i.quantity);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(viewHistoryGet(props.match.params.id));
@@ -28,7 +29,7 @@ const Bill = (props) => {
         let year = newDate.getFullYear();
         
         return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`
-        }
+    }
     const printPDF = async () => {
         const domElement = document.getElementById("print-bill");
         html2canvas(domElement, {
@@ -45,128 +46,108 @@ const Bill = (props) => {
     };
     return (
         <div>
-            <button id="print" onClick={printPDF}>
-                            PRINT
-             </button>
-            {/* <NavbarContainer /> 
-            <Slider /> */}
+            <button className="btn-primary float-end print__pdf" id="print" onClick={printPDF}> PRINT</button>  
+
+            <div className="invoice-box" style={{paddingTop: "100px"}}id='print-bill'  >
+                <table cellPadding={0} cellSpacing={0} >
+                            <tbody  >
+                                <tr className="top">
+                                    <td colSpan={2}>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td className="title">
+                                                        <img src="/img/logo.png" style={{width: '100%', maxWidth: 180}} alt=""/>
+                                                    </td>
+                                                    <td>
+                                                        Invoice :{rand}<br />
+                                                        Created: {getCurrentDate()}<br />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr className="information">
+                                    <td colSpan={2}>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        Delivery Address:<br />
+                                                        { viewHistory?.address}<br />
+                                                        Order date: {viewHistory?.order_date?.substring(0, 10)}
+                                                    </td>
+                                                    <td>
+                                                        Phone:{viewHistory?.phone}<br />
+                                                        Name:{viewHistory?.name}<br />
+                                                        Emai:{viewHistory?.email}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr className="heading">
+                                    <td className="fw-bold">
+                                        Payment Method
+                                    </td>
+                                    <td>
+                                        {viewHistory?.payment}
+                                    </td>
+                                </tr>
+                                <tr className="heading">
+                                    <td className="fw-bold">
+                                        Item
+                                    </td>
+                                    <td className="fw-bold">
+                                        Price
+                                    </td>
+                                </tr>
+                                {
+                                    viewHistory?.cart?.map(i=>
+                                        <tr className="item">
+                                            <td>
+                                                {i.name}({i.quantity})
+                                            </td>
+                                            
+                                            <td >
+                                                ${i.price * i.quantity}
+                                            </td>
+                                        </tr>)
+                                }
+                                <tr className="detail">
+                                    <td className="fw-bold">
+                                        Shipping Cost
+                                    </td>
+                                    <td>
+                                    ${viewHistory?.shiping}
+                                    </td>
+                                </tr>
+                                <tr className="detail">
+                                    <td className="fw-bold">
+                                        Promotion
+                                    </td>
+                                    <td>
+                                        ${promotionPrice > viewHistory?.order_subtotal ?
+                                         promotionPrice - viewHistory?.order_subtotal: 0
+                                        }
+                                    </td>
+                                </tr>
+                                <tr className="total">
+                                    <td />
+                                    <td>
+                                        Total ${viewHistory?.order_subtotal}
+                                    </td>
+                                </tr>
+                            </tbody>
+                    </table>
             
-            {
-
-                viewHistory.map((orderItem, index) => (
-                
-
-                        <div  key={index} className="invoice-box" style={{paddingTop: "100px"}}id='print-bill'  >
-                            <table cellPadding={0} cellSpacing={0} >
-                                        <tbody  >
-                                            <tr className="top">
-                                                <td colSpan={2}>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td className="title">
-                                                                    <img src="/img/logo.png" style={{width: '100%', maxWidth: 200}} alt=""/>
-                                                                </td>
-                                                                <td>
-                                                                    Invoice :{rand}<br />
-                                                                    Created: {getCurrentDate()}<br />
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr className="information">
-                                                <td colSpan={2}>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    Delivery Address:<br />
-                                                                    { orderItem.address}<br />
-                                                                    Order date: {orderItem.order_date.substring(0, 10)}
-                                                                </td>
-                                                                <td>
-                                                                    Phone:{orderItem.phone}<br />
-                                                                    Name:{orderItem.name}<br />
-                                                                    Emai:{orderItem.email}
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr className="heading">
-                                                <td>
-                                                    Payment Method
-                                                </td>
-                                                <td>
-                                                    {orderItem.payment}
-                                                </td>
-                                            </tr>
-                                            <tr className="details">
-                                                <td>
-                                                    Shipping Cost
-                                                </td>
-                                                <td>
-                                                ${orderItem.shiping}
-                                                </td>
-                                            </tr>
-                                            <tr className="heading">
-                                                <td>
-                                                    Item
-                                                </td>
-                                                <td>
-                                                    Price
-                                                </td>
-                                            </tr>
-                                            {
-                                                orderItem.cart.map(i=>
-                                                    <tr className="item">
-                                                        <td>
-                                                            {i.name}({i.quantity})
-                                                        </td>
-                                                        
-                                                        <td>
-                                                            ${i.price * i.quantity}
-                                                        </td>
-                                                    </tr>)
-                                            }
-                                        
-                                            {/* <tr className="item">
-                                                <td>
-                                                    Hosting (3 months)
-                                                </td>
-                                                <td>
-                                                    $75.00
-                                                </td>
-                                            </tr>
-                                            <tr className="item last">
-                                                <td>
-                                                    Domain name (1 year)
-                                                </td>
-                                                <td>
-                                                    $10.00
-                                                </td>
-                                            </tr> */}
-                                            <tr className="total">
-                                                <td />
-                                                <td>
-                                                    Total: ${orderItem.order_subtotal}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                </table>
-                       
-                 </div>
-                    
-                    
-                
-            ))
-            }
+        </div>
+               
              
                
-         </div>   
+    </div>   
       
     );
 };

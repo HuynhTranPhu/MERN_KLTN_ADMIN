@@ -84,7 +84,7 @@ const ChartTotal = () => {
                     labels: ['January', 'February', 'March', 'April', 'May', 'June','July','August','September','November','December'],
                     datasets:[
                         {
-                            label: 'Total revenue',
+                            label: 'Total revenue($)',
                             //data: getOrderSubtotal.arrOrderSubTotal,
                             data: getOrderSubTotalByCategoryYears?.arrCategoryOrderSubTotal?.length > 0 ?getOrderSubTotalByCategoryYears.arrCategoryOrderSubTotal:
                             getOrderSubtotal.arrOrderSubTotal,
