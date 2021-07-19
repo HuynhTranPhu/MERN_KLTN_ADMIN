@@ -54,7 +54,7 @@ const Orders = (props) => {
     <Slider />
         <Card 
           key={viewHistory?._id}
-          headerLeft={"OrderId: "+viewHistory?._id}
+          headerLeft={"OrderId: "+viewHistory?._id.substring(0, 14)}
         >
           <div 
             style={{
@@ -80,12 +80,12 @@ const Orders = (props) => {
             <div>
               <span className="title">Total Price</span>
               <br />
-              <span className="value">${viewHistory?.order_subtotal}</span>
+              <span className="value">{viewHistory?.order_subtotal} đ</span>
             </div>
             <div>
               <span className="title">Promotion Price</span>
               <br />
-              <span className="value">${promotionPrice > viewHistory?.order_subtotal ? promotionPrice - viewHistory?.order_subtotal: 0 }</span>
+              <span className="value">{promotionPrice > viewHistory?.order_subtotal ? promotionPrice - viewHistory?.order_subtotal: 0 } đ</span>
             </div>
             <div>
               <span className="title">Payment Type</span> <br />

@@ -55,15 +55,15 @@ class Slider extends Component {
                             </Link>
                         </li>
                         <li className="active">
-                            <Link className="" to="/promotion">
-                                <i className="fas fa-chart-line"></i>
-                                <span>Promotion</span>
-                            </Link>
-                        </li>
-                        <li className="active">
                             <Link className="" to="/banner">
                                 <i className="fab fa-artstation"></i>
                                 <span>Banner</span>
+                            </Link>
+                        </li>
+                        <li className="active">
+                            <Link className="" to="/promotion">
+                                <i className="fas fa-chart-line"></i>
+                                <span>Price Manage</span>
                             </Link>
                         </li>
                         <li className="active">

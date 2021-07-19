@@ -58,7 +58,7 @@ const Promotion = (props) => {
                 </select>
         </div>
         <div className="promotion__input">
-              <h6 className="promotion__input-text">Enter number promotion</h6>
+              <h6 className="promotion__input-text">Number decrease or increase</h6>
                <input 
                 type="number"
                 className="form-control"

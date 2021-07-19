@@ -68,7 +68,7 @@ const History = (props) => {
                                             {
                                                 order.orders.map(item=>
                                                 <tr key={item._id}>
-                                                    <td>{item._id}</td>
+                                                    <td>{item._id.substring(0, 14)}</td>
                                                     <td>{item.order_date.substring(0, 10)}</td>
                                                     {/* <td>
                                                         <div className="img">
@@ -88,7 +88,7 @@ const History = (props) => {
                                                         </div>
                                                     </td> */}
                                                     <td><Link to={"/ordermanager/"+ item._id}>View Details</Link></td>
-                                                    <td>${item.order_subtotal }</td>
+                                                    <td>{item.order_subtotal } đ</td>
                                                     <td>{item.paymentStatus}</td>
                                                     <td style={{textAlign:"center"}}><Link to={"/bill/"+ item._id}><i className="fas fa-file-export center"></i></Link></td>
                                                     {/* <td>
