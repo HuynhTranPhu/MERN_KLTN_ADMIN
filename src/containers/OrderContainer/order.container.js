@@ -54,7 +54,7 @@ const Orders = (props) => {
     <Slider />
         <Card 
           key={viewHistory?._id}
-          headerLeft={"OrderId: "+viewHistory?._id.substring(0, 14)}
+          headerLeft={"OrderId: "+viewHistory?._id?.substring(0, 14)}
         >
           <div 
             style={{
@@ -162,7 +162,7 @@ const Orders = (props) => {
               </button>
             </div>
             <div>
-              <button className="btn btn-primary cancel" onClick={() => removeOrderHandler(viewHistory?._id)}>
+              <button disabled={viewHistory?.orderStatus?.map(status=>status.isCompleted)[3]===true}  className="btn btn-primary cancel" onClick={() => removeOrderHandler(viewHistory?._id)}>
                 Cancel 
               </button>
             </div>
