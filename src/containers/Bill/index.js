@@ -112,7 +112,7 @@ const Bill = (props) => {
                                             </td>
                                             
                                             <td >
-                                                ${i.price * i.quantity}
+                                                {i.price * i.quantity} đ
                                             </td>
                                         </tr>)
                                 }
@@ -121,7 +121,7 @@ const Bill = (props) => {
                                         Shipping Cost
                                     </td>
                                     <td>
-                                    ${viewHistory?.shiping}
+                                    {viewHistory?.shiping} đ
                                     </td>
                                 </tr>
                                 <tr className="detail">
@@ -129,15 +129,15 @@ const Bill = (props) => {
                                         Promotion
                                     </td>
                                     <td>
-                                        ${promotionPrice > viewHistory?.order_subtotal ?
+                                        {promotionPrice > viewHistory?.order_subtotal ?
                                          promotionPrice - viewHistory?.order_subtotal: 0
-                                        }
+                                        } đ
                                     </td>
                                 </tr>
                                 <tr className="total">
                                     <td />
                                     <td>
-                                        Total ${viewHistory?.order_subtotal}
+                                        Total {viewHistory?.order_subtotal} đ
                                     </td>
                                 </tr>
                             </tbody>
