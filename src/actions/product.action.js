@@ -69,7 +69,7 @@ export const deleteProduct = (id) => async(dispatch, getState) => {
     //console.log(res)
     dispatch(getProduct())
 }
-export const addProduct = (id_category, name, color, size, quantity, price, description, id_brand, files) => async (dispatch, getState) => {
+export const addProduct = (id_category, name, color, size, quantity, price, priceImport, description, id_brand, files) => async (dispatch, getState) => {
     let data = new FormData()
     for(let i=0; i<files.length; i++){
         data.append('files', files[i]);
@@ -81,6 +81,7 @@ export const addProduct = (id_category, name, color, size, quantity, price, desc
     data.append('sizeProduct', JSON.stringify(size)) 
     data.append('quantity', quantity) 
     data.append('price', price)  
+    data.append('priceImport', priceImport)  
     data.append('description', description)
     data.append('id_brand', id_brand)
     //let res
@@ -96,7 +97,7 @@ export const addProduct = (id_category, name, color, size, quantity, price, desc
     dispatch(addProductSuccess())
     dispatch(getProduct())
 }
-export const updateProduct = (id, name, color, size, quantity, id_category, price, description, id_brand, files, status) => async (dispatch, getState) => {
+export const updateProduct = (id, name, color, size, quantity, id_category, price, priceImport,description, id_brand, files, status) => async (dispatch, getState) => {
     let data = new FormData()
     for(let i=0; i<files.length; i++){
         data.append('files', files[i]);
@@ -109,6 +110,7 @@ export const updateProduct = (id, name, color, size, quantity, id_category, pric
     data.append('sizeProduct', JSON.stringify(size)) 
     data.append('quantity', quantity) 
     data.append('price', price)  
+    data.append('priceImport', priceImport)  
     data.append('description', description)
     data.append('id_brand', id_brand)
     data.append('status', status)

@@ -1,4 +1,4 @@
-import { CATEGORY_LIST_FAIL, CATEGORY_LIST_REQUEST, CATEGORY_LIST_SUCCESS, GET_ORDER_BY_CATEGORY_YEAR_FAIL, GET_ORDER_BY_CATEGORY_YEAR_REQUEST, GET_ORDER_BY_CATEGORY_YEAR_SUCCESS, GET_ORDER_BY_YEAR_FAIL, GET_ORDER_BY_YEAR_REQUEST, GET_ORDER_BY_YEAR_SUCCESS, GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_FAIL, GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_REQUEST, GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_SUCCESS, GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_FAIL, GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_REQUEST, GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_SUCCESS, GET_QUANTITY_ORDER_BY_YEAR_FAIL, GET_QUANTITY_ORDER_BY_YEAR_REQUEST, GET_QUANTITY_ORDER_BY_YEAR_SUCCESS, GET_SUB_TOTAL_BY_YEAR_FAIL, GET_SUB_TOTAL_BY_YEAR_REQUEST, GET_SUB_TOTAL_BY_YEAR_SUCCESS } from "../constants/action.types";
+import { CATEGORY_LIST_FAIL, CATEGORY_LIST_REQUEST, CATEGORY_LIST_SUCCESS, GET_ORDER_BY_CATEGORY_YEAR_FAIL, GET_ORDER_BY_CATEGORY_YEAR_REQUEST, GET_ORDER_BY_CATEGORY_YEAR_SUCCESS, GET_ORDER_BY_YEAR_FAIL, GET_ORDER_BY_YEAR_REQUEST, GET_ORDER_BY_YEAR_SUCCESS, GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_FAIL, GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_REQUEST, GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_SUCCESS, GET_PROFIT_BY_CATEGORY_YEAR_FAIL, GET_PROFIT_BY_CATEGORY_YEAR_REQUEST, GET_PROFIT_BY_CATEGORY_YEAR_SUCCESS, GET_PROFIT_BY_YEAR_FAIL, GET_PROFIT_BY_YEAR_REQUEST, GET_PROFIT_BY_YEAR_SUCCESS, GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_FAIL, GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_REQUEST, GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_SUCCESS, GET_QUANTITY_ORDER_BY_YEAR_FAIL, GET_QUANTITY_ORDER_BY_YEAR_REQUEST, GET_QUANTITY_ORDER_BY_YEAR_SUCCESS, GET_SUB_TOTAL_BY_YEAR_FAIL, GET_SUB_TOTAL_BY_YEAR_REQUEST, GET_SUB_TOTAL_BY_YEAR_SUCCESS, PRODUCT_LIST_SELLING_FAIL, PRODUCT_LIST_SELLING_REQUEST, PRODUCT_LIST_SELLING_SUCCESS } from "../constants/action.types";
 
 
 
@@ -23,7 +23,18 @@ function getOrderSubTotalByYearReducer(state={ arrOrderSubTotal:[]}, action){
             return {loading : false, error : action.payload};
         default : return state;
     }
-  }
+}
+function getProFitByYearReducer(state={ arrProfit:[]}, action){
+    switch(action.type){
+        case GET_PROFIT_BY_YEAR_REQUEST:
+            return {loading : true};
+        case GET_PROFIT_BY_YEAR_SUCCESS:
+            return {loading : false, arrProfit : action.payload};
+        case GET_PROFIT_BY_YEAR_FAIL:
+            return {loading : false, error : action.payload};
+        default : return state;
+    }
+}
 function getQuantityOrderByYearReducer(state={ quantityOrder:[]}, action){
     switch(action.type){
         case GET_QUANTITY_ORDER_BY_YEAR_REQUEST:
@@ -68,6 +79,17 @@ function getOrderSubTotalByCategoryYearReducer(state={ arrCategoryOrderSubTotal:
         default : return state;
     }
   }
+function getProFitByCategoryYearReducer(state={ arrCategoryProfit:[]}, action){
+    switch(action.type){
+        case GET_PROFIT_BY_CATEGORY_YEAR_REQUEST:
+            return {loading : true};
+        case GET_PROFIT_BY_CATEGORY_YEAR_SUCCESS:
+            return {loading : false, arrCategoryProfit : action.payload};
+        case GET_PROFIT_BY_CATEGORY_YEAR_FAIL:
+            return {loading : false, error : action.payload};
+        default : return state;
+    }
+  }
 function categoryListReducer(state={category:[]},action){
     switch(action.type){
         case CATEGORY_LIST_REQUEST:
@@ -81,11 +103,27 @@ function categoryListReducer(state={category:[]},action){
             return state;
     }
 }
+//List product selling
+function productListSellingReducer (state = { productSelling: {}}, action){
+    switch(action.type){
+        case PRODUCT_LIST_SELLING_REQUEST:
+            return {loading: true, productSelling:{}};
+        case  PRODUCT_LIST_SELLING_SUCCESS:
+            return { loading : false , productSelling: action.payload};
+        case PRODUCT_LIST_SELLING_FAIL:
+            return { loading : false, error: action.payload}
+        default:
+            return state;
+    }
+}
 export {getOrderByYearReducer,
      getQuantityOrderByYearReducer, 
      getQuantityOrderByCategoryYearReducer,
      getOrderByCategoryYearReducer,
      categoryListReducer,
      getOrderSubTotalByYearReducer,
-     getOrderSubTotalByCategoryYearReducer
+     getOrderSubTotalByCategoryYearReducer,
+     getProFitByYearReducer,
+     getProFitByCategoryYearReducer,
+     productListSellingReducer
 }

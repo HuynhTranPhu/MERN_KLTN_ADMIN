@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { 
         getOrderSubTotalByCategoryYear,
         getOrderSubTotalByYear,
+        getProFitByCategoryYear,
+        getProFitByYear,
         listCategory } 
 from '../../actions/home.action';
 import './index.css';
@@ -15,6 +17,10 @@ const ChartTotal = () => {
     
     const getOrderSubTotalByCategoryYears = useSelector((state) => state.getOrderSubTotalByCategoryYears);
 
+    const getProfit = useSelector((state) => state.getProfit);
+    
+    const getProfitByCategoryYears = useSelector((state) => state.getProfitByCategoryYears);
+
     const categories = useSelector(state => state.categoryList);
     const {category} = categories;
 
@@ -24,15 +30,18 @@ const ChartTotal = () => {
     console.log(getOrderSubtotal)
     const handleSelect= (e)=>{
         dispatch(getOrderSubTotalByYear(e.target.value));
+        dispatch(getProFitByYear(e.target.value));
         setYear(e.target.value);
         
     }
     const handleSelectCate= (e)=>{
         dispatch(getOrderSubTotalByCategoryYear(year,e.target.value));
+        dispatch(getProFitByCategoryYear(year,e.target.value));
     }
     useEffect(() => {
         dispatch(listCategory());
         dispatch(getOrderSubTotalByYear(2021));
+        dispatch(getProFitByYear(2021));
     }, [dispatch])
     
 
@@ -54,19 +63,6 @@ const ChartTotal = () => {
                     <option value="2023">2023</option>
                 </select>
                 <h6 className="select__cate">Select Category</h6>
-                {/* <select onChange={handleSelectCate}>
-                    <option
-                        value="2021"
-                        disabled
-                        selected 
-                        style={{ display: "none" }}
-                    >
-                        Select category
-                    </option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                </select> */}
                 <select disabled={year===0} className="form-select" onChange={handleSelectCate}>
                     <option value="">Select category</option>
                     {
@@ -84,7 +80,7 @@ const ChartTotal = () => {
                     labels: ['January', 'February', 'March', 'April', 'May', 'June','July','August','September','November','December'],
                     datasets:[
                         {
-                            label: 'Total revenue(VND)',
+                            label: 'Total revenue( VND )',
                             //data: getOrderSubtotal.arrOrderSubTotal,
                             data: getOrderSubTotalByCategoryYears?.arrCategoryOrderSubTotal?.length > 0 ?getOrderSubTotalByCategoryYears.arrCategoryOrderSubTotal:
                             getOrderSubtotal.arrOrderSubTotal,
@@ -116,6 +112,41 @@ const ChartTotal = () => {
                                 'rgba(153, 102, 255, 1)',
                                 'rgba(153, 102, 255, 1)',
                                 'rgba(153, 102, 255, 1)'
+                            ],
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Total profit( VND )',
+                            data: getProfitByCategoryYears?.arrCategoryProfit?.length > 0 ?getProfitByCategoryYears.arrCategoryProfit:
+                            getProfit.arrProfit,
+                            backgroundColor: [
+                                'rgba(100, 220, 255, 0.6)',
+                                'rgba(100, 220, 255, 0.6)',
+                                'rgba(100, 220, 255, 0.6)',
+                                'rgba(100, 220, 255, 0.6)',
+                                'rgba(100, 220, 255, 0.6)',
+                                'rgba(100, 220, 255, 0.6)',
+                                'rgba(100, 220, 255, 0.6)',
+                                'rgba(100, 220, 255, 0.6)',
+                                'rgba(100, 220, 255, 0.6)',
+                                'rgba(100, 220, 255, 0.6)',
+                                'rgba(100, 220, 255, 0.6)',
+                                'rgba(100, 220, 255, 0.6)'
+                                
+                            ],
+                            borderColor: [
+                                'rgba(100, 220, 255, 1)',
+                                'rgba(100, 220, 255, 1)',
+                                'rgba(100, 220, 255, 1)',
+                                'rgba(100, 220, 255, 1)',
+                                'rgba(100, 220, 255, 1)',
+                                'rgba(100, 220, 255, 1)',
+                                'rgba(100, 220, 255, 1)',
+                                'rgba(100, 220, 255, 1)',
+                                'rgba(100, 220, 255, 1)',
+                                'rgba(100, 220, 255, 1)',
+                                'rgba(100, 220, 255, 1)',
+                                'rgba(100, 220, 255, 1)'
                             ],
                             borderWidth: 1
                         }

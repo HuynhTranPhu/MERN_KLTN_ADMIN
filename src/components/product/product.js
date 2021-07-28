@@ -19,6 +19,7 @@ class Product extends Component {
 			size: null,
 			quantity: '',
 			price: '',
+			price_import: '',
 			img: '',
 			description: '',
 			id_brand: '',
@@ -198,6 +199,7 @@ class Product extends Component {
 			size,
 			quantity,
 			price,
+			price_import,
 			description,
 			id_brand,
 			files,
@@ -222,6 +224,10 @@ class Product extends Component {
 			toast.error('Price invalid');
 			return;
 		}
+		if (!this.invalidPrice(price_import)) {
+			toast.error('Price invalid');
+			return;
+		}
 		if (id_category === '') {
 			toast.error('Category invalid');
 			return;
@@ -241,6 +247,7 @@ class Product extends Component {
 			size,
 			quantity,
 			price,
+			price_import,
 			description,
 			id_brand,
 			files,
@@ -254,6 +261,7 @@ class Product extends Component {
 			size,
 			quantity,
 			price,
+			price_import,
 			description,
 			id_brand,
 			files,
@@ -270,6 +278,10 @@ class Product extends Component {
 			return;
 		}
 		if (!this.invalidPrice(price)) {
+			toast.error('Price invalid');
+			return;
+		}
+		if (!this.invalidPrice(price_import)) {
 			toast.error('Price invalid');
 			return;
 		}
@@ -293,6 +305,7 @@ class Product extends Component {
 			quantity,
 			id_category,
 			price,
+			price_import,
 			description,
 			id_brand,
 			files,
@@ -372,6 +385,7 @@ class Product extends Component {
 			size: null,
 			quantity: '',
 			price: '',
+			price_import: '',
 			img: '',
 			description: '',
 			id_brand: '',
@@ -687,6 +701,36 @@ class Product extends Component {
 																</div>
 																<div className="form-group ">
 																	<label
+																		for="curl"
+																		className="control-label col-lg-2"
+																	>
+																		Price Import
+																	</label>
+																	<div className="col-lg-12">
+																		<input
+																			value={
+																				this
+																					.state
+																					.price_import
+																			}
+																			onChange={e =>
+																				this.setState(
+																					{
+																						price_import: e
+																							.target
+																							.value,
+																					},
+																				)
+																			}
+																			className="form-control "
+																			id="curl"
+																			type="number"
+																			name="url"
+																		/>
+																	</div>
+																</div>
+																<div className="form-group ">
+																	<label
 																		for="cname"
 																		className="control-label col-lg-2"
 																	>
@@ -922,6 +966,10 @@ class Product extends Component {
 											Price
 										</th>
 										<th>
+											<i className="icon_currency" />{' '}
+											Price Import
+										</th>
+										<th>
 											<i className="fas fa-paint-brush" />{' '}
 											Color
 										</th>
@@ -967,6 +1015,7 @@ class Product extends Component {
 														{element.name}
 													</td>
 													<td>{element.price}</td>
+													<td>{element.price_import}</td>
 													<td>
 														{element.colorProducts?.colorProduct?.map(
 															item => (
@@ -1027,6 +1076,7 @@ class Product extends Component {
 																			quantity:
 																				element.quantity,
 																			price: element.price,
+																			price_import: element.price_import,
 																			description:
 																				element.description,
 																			category:

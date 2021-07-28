@@ -1,38 +1,27 @@
 import React, {  useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { listProductsSelling } from "../../actions/home.action";
 import { getCustomerOrders } from "../../actions/order.action";
 import { listProducts } from "../../actions/product.action";
 import Char from "../Chart";
 import ChartTotal from "../chart-Total";
-// class Home extends Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       sum: 1000
-//     };
-//   }
-//   tinh(count) {
-//     return (count / this.state.sum) * 100 + "%";
-//   }
-//   render() {
-//     return (
-      
-//     );
-//   }
-// }
-// export default Home;
+
 
 
 const Home = (props) => {
   const order = useSelector((state) => state.order);
   const stock = useSelector((state) => state.stock);
-  console.log(stock);
 
+  const top10sale = useSelector((state) => state.top10sale);
+  //console.log(top10sale?.productSelling?.arrQty?.map(i=> i));
+  let n = 0;
   const dispatch = useDispatch();
   useEffect(() => {
   
     dispatch(getCustomerOrders());
     dispatch(listProducts());
+    dispatch(listProductsSelling());
     
 }, [dispatch])
 
@@ -117,7 +106,7 @@ const Home = (props) => {
                     <h2>
                       <i className="fa fa-flag-o red" />
                       <strong>
-                       Statistical total revenue manuals
+                       Statistical total revenue and profit manuals
                       </strong>
                     </h2>
                   </div>
@@ -128,6 +117,67 @@ const Home = (props) => {
            <ChartTotal/>
             <br />
             <br />
+            <div className="row">
+              <div className="col-lg-12 col-md-12">
+                <div className="panel panel-default">
+                  <div className="panel-heading">
+                    <h2>
+                      <i className="fa fa-flag-o red" />
+                      <strong>
+                         Selling products
+                      </strong>
+                    </h2>
+                  </div>
+                 
+                </div>
+              </div>
+            </div>
+            <div className="cart-page">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-lg-12" >
+                            <div className="cart-page-inner">
+                                <div className="table-responsive">
+                                    <table className="table table-bordered">
+                                        <thead className="thead-dark"> 
+                                              <tr>
+                                                  <th>Avatar</th>
+                                                  <th>Name</th>
+                                                  <th>Price</th>
+                                                  <th>Quantity sold</th>
+                                              
+                                              </tr>      
+                                        </thead>
+                                        <tbody className="align-middle">
+                                            {
+                                                top10sale?.productSelling?.arrProduct?.map(item=>
+                                                <tr key={item._id}>
+                                                    <td>{
+                                                      <img
+                                                        class="avatar"
+                                                        src={
+                                                          item.images[0]
+                                                        }
+                                                        alt="Product"
+                                                      />
+                                                    }</td>
+                                                    <td>{item.name}</td>
+                                                    
+                                                    <td>{item.price}</td>
+                                                    
+                                                    <td>{top10sale?.productSelling?.arrQty?.map(i=> i)[n]} </td>
+                                                    <td  style={{display:"none"}}>{n++}</td> 
+                                                </tr>)
+                                            }
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             
           </section>

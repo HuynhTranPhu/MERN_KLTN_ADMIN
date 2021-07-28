@@ -63,19 +63,6 @@ const Char = () => {
                     <option value="2023">2023</option>
                 </select>
                 <h6 className="select__cate">Select Category</h6>
-                {/* <select onChange={handleSelectCate}>
-                    <option
-                        value="2021"
-                        disabled
-                        selected 
-                        style={{ display: "none" }}
-                    >
-                        Select category
-                    </option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                </select> */}
                 <select disabled={year===0} className="form-select" onChange={handleSelectCate}>
                     <option value="">Select category</option>
                     {

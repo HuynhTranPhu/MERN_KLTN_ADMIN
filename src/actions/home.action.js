@@ -5,6 +5,12 @@ import { CATEGORY_LIST_FAIL, CATEGORY_LIST_REQUEST, CATEGORY_LIST_SUCCESS, GET_O
     GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_FAIL, 
     GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_REQUEST, 
     GET_ORDER_SUBTOTAL_BY_CATEGORY_YEAR_SUCCESS, 
+    GET_PROFIT_BY_CATEGORY_YEAR_FAIL, 
+    GET_PROFIT_BY_CATEGORY_YEAR_REQUEST, 
+    GET_PROFIT_BY_CATEGORY_YEAR_SUCCESS, 
+    GET_PROFIT_BY_YEAR_FAIL, 
+    GET_PROFIT_BY_YEAR_REQUEST, 
+    GET_PROFIT_BY_YEAR_SUCCESS, 
     GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_FAIL, 
     GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_REQUEST, 
     GET_QUANTITY_ORDER_BY_CATEGORY_YEAR_SUCCESS, 
@@ -13,7 +19,10 @@ import { CATEGORY_LIST_FAIL, CATEGORY_LIST_REQUEST, CATEGORY_LIST_SUCCESS, GET_O
     GET_QUANTITY_ORDER_BY_YEAR_SUCCESS,
     GET_SUB_TOTAL_BY_YEAR_FAIL,
     GET_SUB_TOTAL_BY_YEAR_REQUEST,
-    GET_SUB_TOTAL_BY_YEAR_SUCCESS} from "../constants/action.types";
+    GET_SUB_TOTAL_BY_YEAR_SUCCESS,
+    PRODUCT_LIST_SELLING_FAIL,
+    PRODUCT_LIST_SELLING_REQUEST,
+    PRODUCT_LIST_SELLING_SUCCESS} from "../constants/action.types";
 
 
 require ('dotenv').config();
@@ -70,6 +79,23 @@ export const getOrderSubTotalByYear = (year) => async (dispatch)=> {
       });
     }
 };
+export const getProFitByYear = (year) => async (dispatch)=> {
+   
+    try {
+      dispatch({ type: GET_PROFIT_BY_YEAR_REQUEST });
+      const {data} = await axios.get(`${url}/admin/order/profitbyyear/${year}`);
+        dispatch({
+          type: GET_PROFIT_BY_YEAR_SUCCESS,
+          payload: data.arrOr
+        });
+       
+    } catch (error) {
+      dispatch({
+        type: GET_PROFIT_BY_YEAR_FAIL,
+        payload: error.message
+      });
+    }
+};
 export const getOrderOfOrderByCategoryYear = (year, categoryName) => async (dispatch)=> {
    
     try {
@@ -121,6 +147,23 @@ export const getOrderSubTotalByCategoryYear = (year, categoryName) => async (dis
       });
     }
 };
+export const getProFitByCategoryYear = (year, categoryName) => async (dispatch)=> {
+   
+    try {
+      dispatch({ type: GET_PROFIT_BY_CATEGORY_YEAR_REQUEST });
+      const {data} = await axios.post(`${url}/admin/order/profitbyyearandcategory`,{year, categoryName});
+        dispatch({
+          type: GET_PROFIT_BY_CATEGORY_YEAR_SUCCESS,
+          payload: data.arrOr
+        });
+       
+    } catch (error) {
+      dispatch({
+        type: GET_PROFIT_BY_CATEGORY_YEAR_FAIL,
+        payload: error.message
+      });
+    }
+};
 export const listCategory = () => async (dispatch) =>{
   try{
       dispatch({type: CATEGORY_LIST_REQUEST});
@@ -136,6 +179,22 @@ export const listCategory = () => async (dispatch) =>{
       ? error.response.data.message
       : error.message;
       dispatch({type: CATEGORY_LIST_FAIL, payload: message});
+  }
+
+}
+export const listProductsSelling = () => async (dispatch) =>{
+  try{
+      dispatch({type: PRODUCT_LIST_SELLING_REQUEST});
+       const {data} = await axios.get(`${url}/product/banchay/top10quantity`);
+      dispatch({type: PRODUCT_LIST_SELLING_SUCCESS, payload: data});
+      
+  }  
+  catch(error){
+      const message=
+      error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message;
+      dispatch({type: PRODUCT_LIST_SELLING_FAIL, payload: message});
   }
 
 }
