@@ -58,25 +58,28 @@ class Product extends Component {
 	showPaginationNumbers() {
 		let paginationNumbers = [];
 		if (this.state.pagination) {
-			let showMax = 3;
+			let showMax = 5;
 			let endPage;
 			let startPage;
 			if (this.state.pagination <= showMax) {
 				startPage = 1;
 				endPage = this.state.pagination.length;
 			} else {
-				if (this.props.page <= 1) {
-					startPage = this.props.page;
+				if (this.props.page <= 3) {
+					startPage = 1;
 				} else {
-					startPage = this.props.page - 1;
+					startPage = this.props.page - 2;
 				}
 				if (
 					startPage !== this.state.pagination.length &&
-					startPage + 2 !== this.state.pagination.length
+					startPage + 4 !== this.state.pagination.length
 				) {
-					endPage = this.props.page + showMax - 2;
+					endPage = this.props.page + showMax - 3;
 					if (endPage >= this.state.pagination.length) {
 						endPage = this.state.pagination.length;
+					}
+					if(endPage< showMax){
+						endPage=showMax;
 					}
 				} else {
 					endPage = this.state.pagination.length;

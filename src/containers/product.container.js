@@ -55,6 +55,7 @@ class ProductContainer extends Component {
             size,
             quantity,
             price,
+            price_import,
             description,
             id_brand,
             files
@@ -66,6 +67,7 @@ class ProductContainer extends Component {
               size,
               quantity,
               price,
+              price_import,
               description,
               id_brand,
               files
@@ -79,6 +81,7 @@ class ProductContainer extends Component {
             quantity,
             id_category,
             price,
+            price_import,
             description,
             id_brand,
             files,
@@ -92,6 +95,7 @@ class ProductContainer extends Component {
               quantity,
               id_category,
               price,
+              price_import,
               description,
               id_brand,
               files,

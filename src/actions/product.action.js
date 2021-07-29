@@ -71,7 +71,7 @@ export const deleteProduct = (id) => async(dispatch, getState) => {
 }
 export const addProduct = (id_category, name, color, size, quantity, price, priceImport, description, id_brand, files) => async (dispatch, getState) => {
     let data = new FormData()
-    for(let i=0; i<files.length; i++){
+    for(let i=0; i<files?.length; i++){
         data.append('files', files[i]);
     }
     //data.append('files', files)
@@ -81,7 +81,7 @@ export const addProduct = (id_category, name, color, size, quantity, price, pric
     data.append('sizeProduct', JSON.stringify(size)) 
     data.append('quantity', quantity) 
     data.append('price', price)  
-    data.append('priceImport', priceImport)  
+    data.append('price_import', priceImport)  
     data.append('description', description)
     data.append('id_brand', id_brand)
     //let res
@@ -99,7 +99,7 @@ export const addProduct = (id_category, name, color, size, quantity, price, pric
 }
 export const updateProduct = (id, name, color, size, quantity, id_category, price, priceImport,description, id_brand, files, status) => async (dispatch, getState) => {
     let data = new FormData()
-    for(let i=0; i<files.length; i++){
+    for(let i=0; i<files?.length; i++){
         data.append('files', files[i]);
     }
     //data.append('files', files)
@@ -110,7 +110,7 @@ export const updateProduct = (id, name, color, size, quantity, id_category, pric
     data.append('sizeProduct', JSON.stringify(size)) 
     data.append('quantity', quantity) 
     data.append('price', price)  
-    data.append('priceImport', priceImport)  
+    data.append('price_import', priceImport)  
     data.append('description', description)
     data.append('id_brand', id_brand)
     data.append('status', status)
